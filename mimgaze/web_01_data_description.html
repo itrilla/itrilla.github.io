@@ -191,12 +191,6 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="https://github.com/itrilla/mimgaze_study">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="mailto:irene.trilla@hu-berlin.de">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -212,38 +206,32 @@ $(document).ready(function () {
 <div id="demographic-data" class="section level1">
 <h1>Demographic data</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># descriptive statistics</span></a>
-<a class="sourceLine" id="cb1-2" title="2">demographics_descr &lt;-<span class="st"> </span><span class="kw">dfSummary</span>(d.quest[<span class="kw">c</span>(<span class="st">&#39;gender&#39;</span>, <span class="st">&#39;age&#39;</span>, <span class="st">&#39;handedness&#39;</span>, <span class="st">&#39;education&#39;</span>, <span class="st">&#39;occupation&#39;</span>)], </a>
-<a class="sourceLine" id="cb1-3" title="3">                <span class="dt">varnumbers=</span><span class="ot">FALSE</span>, <span class="dt">valid.col=</span><span class="ot">FALSE</span>, <span class="dt">na.col=</span><span class="ot">FALSE</span>, <span class="dt">graph.col=</span><span class="ot">TRUE</span>, <span class="dt">display.labels=</span><span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb1-4" title="4">                <span class="dt">labels.col=</span><span class="ot">FALSE</span>, <span class="dt">headings=</span><span class="ot">FALSE</span>, <span class="dt">graph.magnif=</span><span class="fl">0.75</span>)</a>
-<a class="sourceLine" id="cb1-5" title="5">demographics_descr</a></code></pre></div>
-<table>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">dfSummary</span>(d.quest[<span class="kw">c</span>(<span class="st">&#39;gender&#39;</span>, <span class="st">&#39;age&#39;</span>, <span class="st">&#39;handedness&#39;</span>, <span class="st">&#39;education&#39;</span>, <span class="st">&#39;occupation&#39;</span>)], </a>
+<a class="sourceLine" id="cb1-3" title="3">                <span class="dt">varnumbers=</span><span class="ot">FALSE</span>, <span class="dt">valid.col=</span><span class="ot">FALSE</span>, <span class="dt">na.col=</span><span class="ot">FALSE</span>, <span class="dt">graph.col=</span><span class="ot">FALSE</span>, <span class="dt">display.labels=</span><span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb1-4" title="4">                <span class="dt">labels.col=</span><span class="ot">FALSE</span>, <span class="dt">headings=</span><span class="ot">FALSE</span>, <span class="dt">graph.magnif=</span><span class="fl">0.75</span>)</a></code></pre></div>
+<table style="width:94%;">
 <colgroup>
-<col width="16%" />
-<col width="31%" />
-<col width="24%" />
-<col width="28%" />
+<col width="19%" />
+<col width="45%" />
+<col width="29%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Variable</th>
 <th align="left">Stats / Values</th>
 <th align="left">Freqs (% of Valid)</th>
-<th align="left">Graph</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">gender<br />
 [factor]</td>
-<td align="left">1. male<br />
-2. female<br />
-3. other</td>
+<td align="left">1. Male<br />
+2. Female<br />
+3. Non-binary</td>
 <td align="left">28 (46.67%)<br />
 31 (51.67%)<br />
 1 ( 1.67%)</td>
-<td align="left">IIIIIIIII<br />
-IIIIIIIIII<br />
-</td>
 </tr>
 <tr class="even">
 <td align="left">age<br />
@@ -253,36 +241,27 @@ min &lt; med &lt; max:<br />
 18 &lt; 27 &lt; 35<br />
 IQR (CV) : 7.25 (0.18)</td>
 <td align="left">15 distinct values</td>
-<td align="left"><br />
-          :<br />
-          :<br />
-: . :     :<br />
-: : : . : : :   :<br />
-: : : : : : : . :</td>
 </tr>
 <tr class="odd">
 <td align="left">handedness<br />
 [factor]</td>
-<td align="left">1. right_handed<br />
-2. left_handed<br />
-3. ambidextrous</td>
+<td align="left">1. Right-handed<br />
+2. Left-handed<br />
+3. Ambidextrous</td>
 <td align="left">58 (96.67%)<br />
 0 ( 0.00%)<br />
 2 ( 3.33%)</td>
-<td align="left">IIIIIIIIIIIIIIIIIII<br />
-<br />
-</td>
 </tr>
 <tr class="even">
 <td align="left">education<br />
 [factor]</td>
-<td align="left">1. kein<br />
-2. volksschulabschluss<br />
-3. hauptschulabschluss<br />
-4. realschulabschluss<br />
-5. fachhochschulreife<br />
-6. abitur<br />
-7. studium</td>
+<td align="left">1. No degree<br />
+2. Elementary school<br />
+3. Lower secondary school<br />
+4. Secondary school<br />
+5. Technical college<br />
+6. High school<br />
+7. University degree</td>
 <td align="left">1 ( 1.67%)<br />
 0 ( 0.00%)<br />
 2 ( 3.33%)<br />
@@ -290,28 +269,21 @@ IQR (CV) : 7.25 (0.18)</td>
 3 ( 5.00%)<br />
 34 (56.67%)<br />
 19 (31.67%)</td>
-<td align="left"><br />
-<br />
-<br />
-<br />
-I<br />
-IIIIIIIIIII<br />
-IIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">occupation<br />
 [factor]</td>
-<td align="left">1. retired<br />
-2. full_time<br />
-3. part_time<br />
-4. stay_at_home<br />
-5. student_uni<br />
-6. phd_student<br />
-7. intern<br />
-8. student_school<br />
-9. military_service<br />
-10. unemployed<br />
-11. other</td>
+<td align="left">1. Retired<br />
+2. Full-time employee<br />
+3. Part-time employee<br />
+4. Home-maker<br />
+5. University student<br />
+6. PhD student<br />
+7. Intern/trainee<br />
+8. High school student<br />
+9. Military/community servic<br />
+10. Unemployed<br />
+11. Other</td>
 <td align="left">0 ( 0.00%)<br />
 7 (11.67%)<br />
 5 ( 8.33%)<br />
@@ -323,17 +295,6 @@ IIIIII</td>
 0 ( 0.00%)<br />
 0 ( 0.00%)<br />
 3 ( 5.00%)</td>
-<td align="left"><br />
-II<br />
-I<br />
-<br />
-IIIIIIIIIIIIII<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-I</td>
 </tr>
 </tbody>
 </table>
@@ -501,21 +462,24 @@ IQR (CV) : 17.5 (0.65)</td>
 <a class="sourceLine" id="cb4-5" title="5">            <span class="dt">var2=</span><span class="kw">c</span>(<span class="st">&#39;sias&#39;</span>, <span class="st">&#39;sps&#39;</span>, <span class="st">&#39;gars&#39;</span>, <span class="st">&#39;sps&#39;</span>, <span class="st">&#39;gars&#39;</span>, <span class="st">&#39;gars&#39;</span>))</a>
 <a class="sourceLine" id="cb4-6" title="6">cormat &lt;-<span class="st"> </span>d.quest[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),<span class="ot">FALSE</span>]</a>
 <a class="sourceLine" id="cb4-7" title="7"></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co"># get correlation coefficients and CI</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mat<span class="op">$</span>var1)) {</a>
-<a class="sourceLine" id="cb4-10" title="10">  </a>
-<a class="sourceLine" id="cb4-11" title="11">  <span class="kw">row.names</span>(cormat)[i] &lt;-<span class="st"> </span><span class="kw">paste</span>(mat<span class="op">$</span>var1[i], <span class="st">&#39;-&#39;</span>, mat<span class="op">$</span>var2[i])</a>
-<a class="sourceLine" id="cb4-12" title="12">  cormat<span class="op">$</span>rho[i] &lt;-<span class="st"> </span><span class="kw">rcorr</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], <span class="dt">type=</span><span class="st">&#39;spearman&#39;</span>)<span class="op">$</span>r[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb4-13" title="13">  cormat<span class="op">$</span><span class="st">&#39;CI Lower&#39;</span>[i] &lt;-<span class="st"> </span><span class="kw">spearman.ci</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], </a>
-<a class="sourceLine" id="cb4-14" title="14">                                       <span class="dt">nrep=</span><span class="dv">1000</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)<span class="op">$</span>conf.int[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb4-15" title="15">  cormat<span class="op">$</span><span class="st">&#39;CI Upper&#39;</span>[i] &lt;-<span class="st"> </span><span class="kw">spearman.ci</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], </a>
-<a class="sourceLine" id="cb4-16" title="16">                                       <span class="dt">nrep=</span><span class="dv">1000</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)<span class="op">$</span>conf.int[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb4-17" title="17">  cormat<span class="op">$</span>p[i] &lt;-<span class="st"> </span><span class="kw">rcorr</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], <span class="dt">type=</span><span class="st">&#39;spearman&#39;</span>)<span class="op">$</span>P[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb4-18" title="18">}</a>
-<a class="sourceLine" id="cb4-19" title="19"></a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co"># display table</span></a>
-<a class="sourceLine" id="cb4-21" title="21">knitr<span class="op">::</span><span class="kw">kable</span>(cormat, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&quot;Spearman&#39;s rank correlations with 95% CI&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co"># seed the random random number generator to get reproducible CI</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="kw">set.seed</span>(<span class="dv">23</span>) </a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co"># get correlation coefficients and CI</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mat<span class="op">$</span>var1)) {</a>
+<a class="sourceLine" id="cb4-13" title="13">  </a>
+<a class="sourceLine" id="cb4-14" title="14">  <span class="kw">row.names</span>(cormat)[i] &lt;-<span class="st"> </span><span class="kw">paste</span>(mat<span class="op">$</span>var1[i], <span class="st">&#39;-&#39;</span>, mat<span class="op">$</span>var2[i])</a>
+<a class="sourceLine" id="cb4-15" title="15">  cormat<span class="op">$</span>rho[i] &lt;-<span class="st"> </span><span class="kw">rcorr</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], <span class="dt">type=</span><span class="st">&#39;spearman&#39;</span>)<span class="op">$</span>r[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb4-16" title="16">  cormat<span class="op">$</span><span class="st">&#39;CI Lower&#39;</span>[i] &lt;-<span class="st"> </span><span class="kw">spearman.ci</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], </a>
+<a class="sourceLine" id="cb4-17" title="17">                                       <span class="dt">nrep=</span><span class="dv">1000</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)<span class="op">$</span>conf.int[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb4-18" title="18">  cormat<span class="op">$</span><span class="st">&#39;CI Upper&#39;</span>[i] &lt;-<span class="st"> </span><span class="kw">spearman.ci</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], </a>
+<a class="sourceLine" id="cb4-19" title="19">                                       <span class="dt">nrep=</span><span class="dv">1000</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)<span class="op">$</span>conf.int[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb4-20" title="20">  cormat<span class="op">$</span>p[i] &lt;-<span class="st"> </span><span class="kw">rcorr</span>(d.quest[,mat<span class="op">$</span>var1[i]], d.quest[,mat<span class="op">$</span>var2[i]], <span class="dt">type=</span><span class="st">&#39;spearman&#39;</span>)<span class="op">$</span>P[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb4-21" title="21">}</a>
+<a class="sourceLine" id="cb4-22" title="22"></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co"># display table</span></a>
+<a class="sourceLine" id="cb4-24" title="24">knitr<span class="op">::</span><span class="kw">kable</span>(cormat, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&quot;Spearman&#39;s rank correlations with 95% CI&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</a></code></pre></div>
 <table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Spearman’s rank correlations with 95% CI
@@ -547,7 +511,7 @@ aq - sias
 0.64
 </td>
 <td style="text-align:right;">
-0.44
+0.46
 </td>
 <td style="text-align:right;">
 0.77
@@ -581,10 +545,10 @@ aq - gars
 0.29
 </td>
 <td style="text-align:right;">
-0.02
+0.04
 </td>
 <td style="text-align:right;">
-0.53
+0.52
 </td>
 <td style="text-align:right;">
 0.02
@@ -618,7 +582,7 @@ sias - gars
 0.39
 </td>
 <td style="text-align:right;">
-0.75
+0.74
 </td>
 <td style="text-align:right;">
 0.00
@@ -632,10 +596,10 @@ sps - gars
 0.50
 </td>
 <td style="text-align:right;">
-0.29
+0.30
 </td>
 <td style="text-align:right;">
-0.66
+0.67
 </td>
 <td style="text-align:right;">
 0.00
@@ -849,19 +813,17 @@ Max : 3.12</td>
 <a class="sourceLine" id="cb6-42" title="42">d.aggr<span class="op">$</span>spatial   &lt;-<span class="st"> </span><span class="kw">factor</span>(d.aggr<span class="op">$</span>spatial, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;compt&#39;</span>, <span class="st">&#39;incompt&#39;</span>))</a></code></pre></div>
 <p>For the <strong>preregistered analyses</strong>, mean RT and ER were computed for each participant and condition.</p>
 <p>The analysis data set contains the following variables:</p>
-<table style="width:100%;">
+<table style="width:90%;">
 <colgroup>
-<col width="15%" />
-<col width="35%" />
-<col width="26%" />
-<col width="22%" />
+<col width="18%" />
+<col width="41%" />
+<col width="30%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Variable</th>
 <th align="left">Stats / Values</th>
 <th align="left">Freqs (% of Valid)</th>
-<th align="left">Graph</th>
 </tr>
 </thead>
 <tbody>
@@ -890,17 +852,6 @@ Max : 3.12</td>
 8 ( 1.72%)<br />
 8 ( 1.72%)<br />
 384 (82.76%)</td>
-<td align="left"><br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-IIIIIIIIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">gaze<br />
@@ -909,8 +860,6 @@ IIIIIIIIIIIIIIII</td>
 2. averted</td>
 <td align="left">232 (50.00%)<br />
 232 (50.00%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">spatial<br />
@@ -919,8 +868,6 @@ IIIIIIIIII</td>
 2. incompt</td>
 <td align="left">232 (50.00%)<br />
 232 (50.00%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">imitative<br />
@@ -929,8 +876,6 @@ IIIIIIIIII</td>
 2. incompt</td>
 <td align="left">232 (50.00%)<br />
 232 (50.00%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">rt<br />
@@ -940,12 +885,6 @@ min &lt; med &lt; max:<br />
 360.24 &lt; 489.89 &lt; 762.85<br />
 IQR (CV) : 91.68 (0.15)</td>
 <td align="left">464 distinct values</td>
-<td align="left"><br />
-    :<br />
-  : : :<br />
-  : : :<br />
-  : : : :<br />
-: : : : : : . .</td>
 </tr>
 <tr class="even">
 <td align="left">er<br />
@@ -955,12 +894,6 @@ min &lt; med &lt; max:<br />
 0 &lt; 0.03 &lt; 0.28<br />
 IQR (CV) : 0.06 (1.26)</td>
 <td align="left">13 distinct values</td>
-<td align="left"><br />
-:<br />
-:<br />
-:<br />
-: :<br />
-: : . .</td>
 </tr>
 </tbody>
 </table>
@@ -1075,17 +1008,15 @@ Non-binary
 <h4>RT data set:</h4>
 <table>
 <colgroup>
-<col width="18%" />
-<col width="35%" />
-<col width="25%" />
-<col width="20%" />
+<col width="23%" />
+<col width="44%" />
+<col width="31%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Variable</th>
 <th align="left">Stats / Values</th>
 <th align="left">Freqs (% of Valid)</th>
-<th align="left">Graph</th>
 </tr>
 </thead>
 <tbody>
@@ -1114,17 +1045,6 @@ Non-binary
 236 ( 1.68%)<br />
 242 ( 1.72%)<br />
 11641 (82.87%)</td>
-<td align="left"><br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-IIIIIIIIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">gaze<br />
@@ -1133,8 +1053,6 @@ IIIIIIIIIIIIIIII</td>
 2. averted</td>
 <td align="left">7040 (50.12%)<br />
 7007 (49.88%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">spatial<br />
@@ -1143,8 +1061,6 @@ IIIIIIIII</td>
 2. incompt</td>
 <td align="left">7136 (50.80%)<br />
 6911 (49.20%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">imitative<br />
@@ -1153,8 +1069,6 @@ IIIIIIIII</td>
 2. incompt</td>
 <td align="left">7097 (50.52%)<br />
 6950 (49.48%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">stimulus<br />
@@ -1181,17 +1095,6 @@ IIIIIIIII</td>
 225 ( 1.60%)<br />
 227 ( 1.62%)<br />
 11851 (84.37%)</td>
-<td align="left"><br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-IIIIIIIIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">stim_ethnicity<br />
@@ -1200,8 +1103,6 @@ IIIIIIIIIIIIIIII</td>
 2. mediterranean</td>
 <td align="left">7009 (49.90%)<br />
 7038 (50.10%)</td>
-<td align="left">IIIIIIIII<br />
-IIIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">rt<br />
@@ -1211,12 +1112,6 @@ min &lt; med &lt; max:<br />
 200.63 &lt; 483.89 &lt; 999.68<br />
 IQR (CV) : 133.34 (0.23)</td>
 <td align="left">14046 distinct values</td>
-<td align="left"><br />
-      :<br />
-    : :<br />
-    : : .<br />
-    : : : .<br />
-  : : : : : . .</td>
 </tr>
 </tbody>
 </table>
@@ -1225,17 +1120,15 @@ IQR (CV) : 133.34 (0.23)</td>
 <h4>ER data set:</h4>
 <table>
 <colgroup>
-<col width="18%" />
-<col width="35%" />
-<col width="22%" />
-<col width="23%" />
+<col width="24%" />
+<col width="46%" />
+<col width="28%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Variable</th>
 <th align="left">Stats / Values</th>
 <th align="left">Freqs (% of Valid)</th>
-<th align="left">Graph</th>
 </tr>
 </thead>
 <tbody>
@@ -1264,17 +1157,6 @@ IQR (CV) : 133.34 (0.23)</td>
 256 ( 1.67%)<br />
 256 ( 1.67%)<br />
 12793 (83.33%)</td>
-<td align="left"><br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-IIIIIIIIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">gaze<br />
@@ -1283,8 +1165,6 @@ IIIIIIIIIIIIIIII</td>
 2. averted</td>
 <td align="left">7678 (50.01%)<br />
 7675 (49.99%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">spatial<br />
@@ -1293,8 +1173,6 @@ IIIIIIIII</td>
 2. incompt</td>
 <td align="left">7676 (50.00%)<br />
 7677 (50.00%)</td>
-<td align="left">IIIIIIIII<br />
-IIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">imitative<br />
@@ -1303,8 +1181,6 @@ IIIIIIIIII</td>
 2. incompt</td>
 <td align="left">7677 (50.00%)<br />
 7676 (50.00%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">stimulus<br />
@@ -1331,17 +1207,6 @@ IIIIIIIII</td>
 240 ( 1.56%)<br />
 240 ( 1.56%)<br />
 12953 (84.37%)</td>
-<td align="left"><br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-IIIIIIIIIIIIIIII</td>
 </tr>
 <tr class="even">
 <td align="left">stim_ethnicity<br />
@@ -1350,8 +1215,6 @@ IIIIIIIIIIIIIIII</td>
 2. mediterranean</td>
 <td align="left">7678 (50.01%)<br />
 7675 (49.99%)</td>
-<td align="left">IIIIIIIIII<br />
-IIIIIIIII</td>
 </tr>
 <tr class="odd">
 <td align="left">error<br />
@@ -1360,8 +1223,6 @@ IIIIIIIII</td>
 2. error</td>
 <td align="left">669 ( 4.36%)<br />
 14684 (95.64%)</td>
-<td align="left"><br />
-IIIIIIIIIIIIIIIIIII</td>
 </tr>
 </tbody>
 </table>
@@ -1428,6 +1289,12 @@ IIIIIIIIIIIIIIIIIII</td>
   </div>
   </div>
   <div class="row">
+
+<div id="footer">
+    <div class="powered by">
+      &copy 2020. Powered by <a href="https://github.com/juba/rmdformats" target="_blank" rel="noopener">rmdformats</a>.
+    </div>
+</div>
     </div>
   </div>
 
