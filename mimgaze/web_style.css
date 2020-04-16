@@ -1,0 +1,57 @@
+
+/* HEADING */
+h1, .h1 {
+  margin-top: 40px;
+  color: #44709e;
+}
+
+/* CAPTION */
+/* ------- */
+
+caption {
+  font-size: 1em;
+  color: #939393;
+  text-align: justify;
+}
+
+/* TABLE */
+table {
+  caption-side: top;
+}
+
+.caption {
+  font-size: 1em;
+  color: #939393;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+
+/* TABS */
+/* --- */
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #44709e;
+}
+
+a, a:focus, a:hover {
+    color: #44709e;
+}
+
+/* NAVEGATION BAR */
+/* -------------- */
+
+.navbar, .navbar.navbar-default {
+    background-color: #264b71;
+  }
+  
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #FFC0CB;
+  }
+
+.header-panel {
+    background-color: #264b71;
+  }

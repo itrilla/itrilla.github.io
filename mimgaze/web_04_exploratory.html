@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Exploratory analyses</title>
+<!-- Material Design fonts -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+<script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+<link href="site_libs/bootstrap_material-0.1/bootstrap-material-design.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap_material-0.1/ripples.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap_material-0.1/material.min.js"></script>
+<script src="site_libs/bootstrap_material-0.1/ripples.min.js"></script>
+<link href="site_libs/material-0.1/material.css" rel="stylesheet" />
+<script src="site_libs/material-0.1/material.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="web_style.css" type="text/css" />
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("toc");
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+</head>
+
+<body>
+
+<div class="header-panel shadow z-2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3">
+        <div id="header">
+    <h1 class="title">Exploratory analyses</h1>
+                </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<div class="container-fluid main-container">
+    <div class="row">
+      <nav class="col-xs-3 menu">
+        <div id="toc">
+        <ul>
+        <li><a href="#ethnicity">Ethnicity</a></li>
+        <li><a href="#social-anxiety">Social anxiety</a></li>
+        <li><a href="#attributed-meaning-of-gaze">Attributed meaning of gaze</a></li>
+        <li><a href="#session-info">Session info</a></li>
+        </ul>
+        </div>
+        
+        
+        
+      </nav>
+     <div class="pages col-xs-9">
+     <div class="row">
+       <div class="col-xs-10">
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Trilla et al.</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="web_index.html"></a>
+</li>
+<li>
+  <a href="web_01_data_description.html">Data description</a>
+</li>
+<li>
+  <a href="web_02_confirmatory_preregistered.html">Preregistered analyses</a>
+</li>
+<li>
+  <a href="web_03_confirmatory_glmm.html">GLMM analyses</a>
+</li>
+<li>
+  <a href="web_04_exploratory.html">Exploratory analyses</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="http://osf.io/9gku6">
+    <span class="ai ai ai ai-osf ai-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/itrilla/mimgaze_study">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:irene.trilla@hu-berlin.de">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
+
+
+<div id="ethnicity" class="section level1">
+<h1>Ethnicity</h1>
+<p>To explore whether gaze effects on imitative and spatial compatibility are conditional to the ethnicity of the observed agent, we ran following model:</p>
+<pre><code>Condensed form:
+  RT ~ Imitative*Gaze*Ethnicity + Spatial*Gaze*Ethnicity + (1|ID) + (1|Stimulus)
+
+Extended form:
+  RT ~ Imitative + Spatial + Gaze + Ethnicity + Imitative:Gaze + Spatial:Gaze + 
+    Imitative:Ethnicity + Spatial:Ethnicity + Gaze:Ethnicity + Imitative:Gaze:Ethnicity +
+    Spatial:Gaze:Ethnicity + (1|ID) + (1|Stimulus)</code></pre>
+<p>Effect coding contrasts were set for all categorical predictors. An inverse gaussian distribution with identity link function was selected for this GLMM as we used RTs as dependent variable.</p>
+<div id="main-results" class="section level2">
+<h2>Main results</h2>
+<p>Besides the main effects of <code>Imitative</code>, <code>Spatial</code> and <code>Gaze</code>, the GLMM revealed a significant 3-way interaction between <code>Imitative:Gaze:Ethnicity</code>, which suggests that the influence of gaze on imitative compatibility is dependent on the ethnicity of the actor.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># run model</span></a>
+<a class="sourceLine" id="cb2-2" title="2">m.ethnic &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>stim_ethnicity <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>stim_ethnicity <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb2-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</a>
+<a class="sourceLine" id="cb2-4" title="4">            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;bobyqa&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">summary</span>(m.ethnic, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: 
+## rt ~ imitative * gaze * stim_ethnicity + spatial * gaze * stim_ethnicity +  
+##     (1 | id) + (1 | stimulus)
+##    Data: d.exploratory
+## Control: glmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163756.3 163869.6 -81863.2 163726.3    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3593 -0.6833 -0.0958  0.5784  5.3147 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.213e+01  5.668423
+##  id       (Intercept) 6.210e+02 24.920488
+##  Residual             6.067e-05  0.007789
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                                  Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)                       528.495     10.651  49.618  &lt; 2e-16 ***
+## imitative1                        -10.298      1.345  -7.658  1.9e-14 ***
+## gaze1                              -4.647      1.356  -3.428 0.000609 ***
+## stim_ethnicity1                     1.021      2.683   0.381 0.703457    
+## spatial1                          -22.285      1.351 -16.492  &lt; 2e-16 ***
+## imitative1:gaze1                   -2.451      2.707  -0.905 0.365294    
+## imitative1:stim_ethnicity1          3.001      2.695   1.113 0.265521    
+## gaze1:stim_ethnicity1               4.014      2.680   1.497 0.134270    
+## gaze1:spatial1                      5.058      2.598   1.947 0.051587 .  
+## stim_ethnicity1:spatial1            4.179      2.652   1.576 0.115137    
+## imitative1:gaze1:stim_ethnicity1  -13.722      5.073  -2.705 0.006835 ** 
+## gaze1:stim_ethnicity1:spatial1      3.541      5.535   0.640 0.522366    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># MODEL DIAGNOSTICS</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># residual plots to check linearity and homocedasticity</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">plot</span>(<span class="kw">fitted</span>(m.ethnic), <span class="kw">residuals</span>(m.ethnic), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Fitted Values&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Residuals&#39;</span>, <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="kw">hist</span>(<span class="kw">residuals</span>(m.ethnic), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Residuals&#39;</span>)</a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">qqnorm</span>(<span class="kw">residuals</span>(m.ethnic), <span class="dt">main=</span><span class="st">&#39;&#39;</span>)</a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">layout</span>(<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># INTERACTION ETHNICITY*GAZE*IMITATIVE</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></a>
+<a class="sourceLine" id="cb5-4" title="4">descr.ethnic &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.exploratory, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;stim_ethnicity&#39;</span>, <span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># figure</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="kw">ggplot</span>(descr.ethnic, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>imitative)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-8" title="8"></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="co"># bar graphs with means and CI</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="dv">-1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>stim_ethnicity, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">stim_ethnicity=</span>ethnic_labels)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-13" title="13"></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="st">  </span><span class="co"># format</span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">labels=</span>compt_labels, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">460</span>, <span class="dv">512</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>gaze_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;&#39;</span>, <span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-19" title="19"><span class="st">  </span>my_theme</a></code></pre></div>
+<p><img src="web_04_exploratory_files/figure-html/ETHNIC_Fig_Interact-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="follow-up-tests" class="section level2">
+<h2>Follow-up tests</h2>
+<p>To disentangle the 3-way interaction, we tested the interaction <code>Imitative:Gaze</code> for Mediterranean and Northen-European actors separately. This model showed that gaze had a significant effect on imitative compatibility for Northern-European actors, but not for Mediterranean actors.</p>
+<p>Planned comparisons confirmed that Mediterranean actors triggered imitative compatibility effects in both direct gaze and averted gaze conditions. In contrast, Northern-European identities elicited imitative effects only when they established direct gaze, but not with averted gaze.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># compute the gaze*imitative for each ethnicity</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></a>
+<a class="sourceLine" id="cb6-3" title="3">m.ethnic.interaction &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>stim_ethnicity<span class="op">/</span>imitative<span class="op">*</span>gaze <span class="op">+</span><span class="st"> </span>stim_ethnicity<span class="op">/</span>spatial<span class="op">*</span>gaze <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</a>
+<a class="sourceLine" id="cb6-5" title="5">            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;bobyqa&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">summary</span>(m.ethnic.interaction, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ stim_ethnicity/imitative * gaze + stim_ethnicity/spatial *  
+##     gaze + (1 | id) + (1 | stimulus)
+##    Data: d.exploratory
+## Control: glmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163756.3 163869.6 -81863.2 163726.3    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3593 -0.6833 -0.0958  0.5784  5.3147 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.213e+01  5.668545
+##  id       (Intercept) 6.210e+02 24.920294
+##  Residual             6.067e-05  0.007789
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                                                  Estimate Std. Error t value
+## (Intercept)                                       528.494      7.871  67.146
+## stim_ethnicity1                                     1.021      2.634   0.388
+## gaze1                                              -4.647      1.345  -3.456
+## stim_ethnicitynorthern_european:imitative1         -8.797      1.878  -4.685
+## stim_ethnicitymediterranean:imitative1            -11.798      1.880  -6.275
+## stim_ethnicity1:gaze1                               4.014      2.609   1.538
+## stim_ethnicitynorthern_european:spatial1          -20.196      1.877 -10.759
+## stim_ethnicitymediterranean:spatial1              -24.375      1.878 -12.981
+## stim_ethnicitynorthern_european:imitative1:gaze1   -9.312      3.588  -2.595
+## stim_ethnicitymediterranean:imitative1:gaze1        4.410      3.611   1.221
+## stim_ethnicitynorthern_european:gaze1:spatial1      6.829      3.483   1.961
+## stim_ethnicitymediterranean:gaze1:spatial1          3.288      3.514   0.936
+##                                                  Pr(&gt;|z|)    
+## (Intercept)                                       &lt; 2e-16 ***
+## stim_ethnicity1                                  0.698237    
+## gaze1                                            0.000549 ***
+## stim_ethnicitynorthern_european:imitative1       2.80e-06 ***
+## stim_ethnicitymediterranean:imitative1           3.51e-10 ***
+## stim_ethnicity1:gaze1                            0.123949    
+## stim_ethnicitynorthern_european:spatial1          &lt; 2e-16 ***
+## stim_ethnicitymediterranean:spatial1              &lt; 2e-16 ***
+## stim_ethnicitynorthern_european:imitative1:gaze1 0.009457 ** 
+## stim_ethnicitymediterranean:imitative1:gaze1     0.221998    
+## stim_ethnicitynorthern_european:gaze1:spatial1   0.049911 *  
+## stim_ethnicitymediterranean:gaze1:spatial1       0.349498    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># post-hoc tests</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co"># ~~~~~~~~~~~~~~</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co"># estimated means for imitative*gaze conditions for each ethnicity</span></a>
+<a class="sourceLine" id="cb8-4" title="4">emm.ethnic &lt;-<span class="st"> </span><span class="kw">emmeans</span>(m.ethnic, <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">|</span>stim_ethnicity)</a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co"># create vectors that represent the mean of each condition of imitative*gaze</span></a>
+<a class="sourceLine" id="cb8-7" title="7">d_compt   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb8-8" title="8">d_incompt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb8-9" title="9">a_compt   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb8-10" title="10">a_incompt &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb8-11" title="11"></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co"># planned contrasts</span></a>
+<a class="sourceLine" id="cb8-13" title="13">emm.ethnic.posthoc &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">contrast</span>(emm.ethnic, <span class="dt">adjust=</span><span class="st">&#39;holm&#39;</span>,</a>
+<a class="sourceLine" id="cb8-14" title="14">                               <span class="dt">method=</span><span class="kw">list</span>(<span class="st">&#39;Direct gaze: Incompt. vs. Compt.&#39;</span>=d_incompt<span class="op">-</span>d_compt,</a>
+<a class="sourceLine" id="cb8-15" title="15">                                           <span class="st">&#39;Averted gaze: Incompt. vs. Compt.&#39;</span>=a_incompt<span class="op">-</span>a_compt)))</a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="kw">colnames</span>(emm.ethnic.posthoc) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Contrast&#39;</span>, <span class="st">&#39;Ethnicity&#39;</span>, <span class="st">&#39;Estimate&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;df&#39;</span>, <span class="st">&#39;Z-ratio&#39;</span>, <span class="st">&#39;p-adjust&#39;</span>)</a>
+<a class="sourceLine" id="cb8-17" title="17"></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="co"># display table</span></a>
+<a class="sourceLine" id="cb8-19" title="19">knitr<span class="op">::</span><span class="kw">kable</span>(emm.ethnic.posthoc, <span class="dt">digits=</span><span class="dv">3</span>, <span class="dt">caption=</span><span class="st">&#39;Post-hoc comparisons:&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&quot;center&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>))</a></code></pre></div>
+<table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Post-hoc comparisons:
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Contrast
+</th>
+<th style="text-align:left;">
+Ethnicity
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+Z-ratio
+</th>
+<th style="text-align:right;">
+p-adjust
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Direct gaze: Incompt. vs. Compt.
+</td>
+<td style="text-align:left;">
+northern_european
+</td>
+<td style="text-align:right;">
+13.453
+</td>
+<td style="text-align:right;">
+2.636
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+5.104
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Averted gaze: Incompt. vs. Compt.
+</td>
+<td style="text-align:left;">
+northern_european
+</td>
+<td style="text-align:right;">
+4.142
+</td>
+<td style="text-align:right;">
+2.677
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+1.547
+</td>
+<td style="text-align:right;">
+0.122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Direct gaze: Incompt. vs. Compt.
+</td>
+<td style="text-align:left;">
+mediterranean
+</td>
+<td style="text-align:right;">
+9.593
+</td>
+<td style="text-align:right;">
+2.642
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+3.632
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Averted gaze: Incompt. vs. Compt.
+</td>
+<td style="text-align:left;">
+mediterranean
+</td>
+<td style="text-align:right;">
+14.004
+</td>
+<td style="text-align:right;">
+2.678
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+5.230
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="social-anxiety" class="section level1 tabset tabset-fade tabset-pills">
+<h1>Social anxiety</h1>
+<p>To explore whether gaze effects on imitative and spatial compatibility are modulated by individual differences in social anxiety, we ran one GLMM for each of the three social anxiety questionnaires (SIAS, SPS and GARS). The general form of the models was:</p>
+<p>Condensed form: <code>RT ~ Imitative*Gaze*Quest + Spatial*Gaze*Quest + (1|ID) + (1|Stimulus)</code></p>
+<p>Extended form: <code>RT ~ Imitative + Spatial + Quest + Gaze + Imitative:Gaze + Spatial:Gaze +</code> <code>Imitative:Quest + Spatial:Quest + Gaze:Quest + Imitative:Gaze:Quest +</code> <code>Spatial:Gaze:Quest + (1|ID) + (1|Stimulus)</code></p>
+<p><code>Quest</code> refers to the scores of either the SIAS, SPS or GARS, respectively. Effect coding contrasts were set for all categorical predictors and continues predictors were mean-centered. An inverse gaussian distribution with identity link function was selected for this GLMM as we used RTs as dependent variable.</p>
+<div id="sias" class="section level2">
+<h2>SIAS</h2>
+<div id="main-results-1" class="section level3">
+<h3>Main results</h3>
+<p>The GLMM revealed a significant 3-way interaction between <code>Imitative:Gaze:SIAS</code>, which suggests that the influence of gaze on imitative compatibility varied as a function of social anxiety.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># run model</span></a>
+<a class="sourceLine" id="cb9-2" title="2">m.sias &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>sias_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>sias_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb9-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</a>
+<a class="sourceLine" id="cb9-4" title="4">            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;bobyqa&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw">summary</span>(m.sias, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ imitative * gaze * sias_cen + spatial * gaze * sias_cen +  
+##     (1 | id) + (1 | stimulus)
+##    Data: d.exploratory
+## Control: glmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163757.2 163870.4 -81863.6 163727.2    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3574 -0.6724 -0.0849  0.5893  5.3365 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.160e+01  5.621799
+##  id       (Intercept) 6.506e+02 25.506162
+##  Residual             6.050e-05  0.007778
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                            Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)               508.24708    3.44884 147.368  &lt; 2e-16 ***
+## imitative1                -10.20965    1.38342  -7.380 1.58e-13 ***
+## gaze1                      -4.62755    1.38281  -3.346 0.000818 ***
+## sias_cen                   -0.81190    0.27965  -2.903 0.003693 ** 
+## spatial1                  -22.29740    1.38198 -16.134  &lt; 2e-16 ***
+## imitative1:gaze1           -2.64723    2.75447  -0.961 0.336519    
+## imitative1:sias_cen        -0.04935    0.10854  -0.455 0.649339    
+## gaze1:sias_cen             -0.08141    0.10828  -0.752 0.452173    
+## gaze1:spatial1              5.31777    2.76236   1.925 0.054219 .  
+## sias_cen:spatial1          -0.11226    0.10820  -1.038 0.299488    
+## imitative1:gaze1:sias_cen   0.65869    0.21584   3.052 0.002275 ** 
+## gaze1:sias_cen:spatial1    -0.20867    0.21631  -0.965 0.334708    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## convergence code: 0
+## unable to evaluate scaled gradient
+## Model failed to converge: degenerate  Hessian with 3 negative eigenvalues</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># MODEL DIAGNOSTICS</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="co"># residual plots to check linearity and homocedasticity</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="kw">plot</span>(<span class="kw">fitted</span>(m.sias), <span class="kw">residuals</span>(m.sias), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Fitted Values&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Residuals&#39;</span>, <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="kw">hist</span>(<span class="kw">residuals</span>(m.sias), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Residuals&#39;</span>)</a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">qqnorm</span>(<span class="kw">residuals</span>(m.sias), <span class="dt">main=</span><span class="st">&#39;&#39;</span>)</a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="kw">layout</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb11-9" title="9"></a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="co"># multicolinearity</span></a>
+<a class="sourceLine" id="cb11-11" title="11">car<span class="op">::</span><span class="kw">vif</span>(m.sias)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># predicted effects</span></a>
+<a class="sourceLine" id="cb12-2" title="2">m.sias.interact &lt;-<span class="st"> </span><span class="kw">get_model_data</span>(m.sias, <span class="dt">type=</span><span class="st">&#39;pred&#39;</span>, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&#39;sias_cen&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;gaze&#39;</span>))</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">names</span>(m.sias.interact)[<span class="kw">names</span>(m.sias.interact) <span class="op">==</span><span class="st"> &#39;x&#39;</span>] &lt;-<span class="st"> &#39;sias&#39;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="kw">names</span>(m.sias.interact)[<span class="kw">names</span>(m.sias.interact) <span class="op">==</span><span class="st"> &#39;group&#39;</span>] &lt;-<span class="st"> &#39;imitative&#39;</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw">names</span>(m.sias.interact)[<span class="kw">names</span>(m.sias.interact) <span class="op">==</span><span class="st"> &#39;facet&#39;</span>] &lt;-<span class="st"> &#39;gaze&#39;</span></a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co"># back-transform mean-centered values for plotting</span></a>
+<a class="sourceLine" id="cb12-8" title="8">m.sias.interact<span class="op">$</span>sias &lt;-<span class="st"> </span>m.sias.interact<span class="op">$</span>sias <span class="op">+</span><span class="st"> </span><span class="kw">attr</span>(d.exploratory<span class="op">$</span>sias_cen, <span class="st">&#39;scaled:center&#39;</span>)</a>
+<a class="sourceLine" id="cb12-9" title="9"></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co"># plot predicted effects</span></a>
+<a class="sourceLine" id="cb12-11" title="11">fig.sias.interact &lt;-<span class="st"> </span><span class="kw">ggplot</span>(m.sias.interact, <span class="kw">aes</span>(<span class="dt">y=</span>predicted, <span class="dt">x=</span>sias, <span class="dt">group=</span>imitative)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-12" title="12"></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="co"># predicted fixed effect of mood</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>conf.low, <span class="dt">ymax=</span>conf.high, <span class="dt">fill=</span>imitative), <span class="dt">alpha=</span>.<span class="dv">15</span>, <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype=</span>imitative, <span class="dt">color=</span>imitative), <span class="dt">size=</span>line_width<span class="fl">-0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>gaze, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">gaze=</span>gaze_labels)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-17" title="17"></a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="st">  </span><span class="co"># format</span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="st">  </span><span class="kw">scale_linetype_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;solid&quot;</span>, <span class="st">&quot;solid&quot;</span>), <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-22" title="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;SIAS&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-23" title="23"><span class="st">  </span><span class="co">#ylim(500, 560) +</span></a>
+<a class="sourceLine" id="cb12-24" title="24"><span class="st">  </span>my_theme <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="st">  </span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb12-26" title="26">    <span class="dt">panel.spacing=</span><span class="kw">unit</span>(<span class="dv">1</span>, <span class="st">&#39;lines&#39;</span>),</a>
+<a class="sourceLine" id="cb12-27" title="27">    <span class="dt">panel.border=</span><span class="kw">element_rect</span>(<span class="dt">colour=</span><span class="st">&#39;grey50&#39;</span>, <span class="dt">size=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb12-28" title="28">    <span class="dt">panel.grid.minor.x=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</a>
+<a class="sourceLine" id="cb12-29" title="29">    <span class="dt">panel.grid.major.y=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</a>
+<a class="sourceLine" id="cb12-30" title="30">    <span class="dt">axis.line=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb12-31" title="31">)</a>
+<a class="sourceLine" id="cb12-32" title="32">fig.sias.interact</a></code></pre></div>
+<p><img src="web_04_exploratory_files/figure-html/SIAS_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="follow-up-tests-1" class="section level3">
+<h3>Follow-up tests</h3>
+<p>To follow-up the 3-way interaction, we tested the conditional effects of SIAS on imitative compatibility for direct gaze and averted gaze conditions separately.</p>
+<p>Results from this GLMM indicated that the difference in RTs between imitatively incompatible and imitatively compatible trials (i.e. imitative effect) in averted gaze conditions increased as a function of social anxiety. Although descriptively the imitative effects following direct seemed to decrease with higher social anxiety symptoms, this effect did not reach statistical significance.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># conditional effects for gaze levels</span></a>
+<a class="sourceLine" id="cb13-2" title="2">m.sias.gaze &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>gaze<span class="op">/</span>imitative<span class="op">*</span>sias_cen <span class="op">+</span><span class="st"> </span>gaze<span class="op">/</span>spatial<span class="op">*</span>sias_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb13-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="kw">summary</span>(m.sias.gaze, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ gaze/imitative * sias_cen + gaze/spatial * sias_cen + (1 |  
+##     id) + (1 | stimulus)
+##    Data: d.exploratory
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163755.5 163868.8 -81862.8 163725.5    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3588 -0.6812 -0.0946  0.5777  5.3144 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.181e+01  5.639854
+##  id       (Intercept) 6.517e+02 25.528991
+##  Residual             6.051e-05  0.007779
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                                  Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)                     528.57964   18.53607  28.516  &lt; 2e-16 ***
+## gaze1                            -4.56297    1.36431  -3.345 0.000824 ***
+## sias_cen                         -0.69586    1.32059  -0.527 0.598238    
+## gazedirect:imitative1           -11.74204    1.92084  -6.113 9.78e-10 ***
+## gazeaverted:imitative1           -8.77815    2.43304  -3.608 0.000309 ***
+## gaze1:sias_cen                   -0.08334    0.10637  -0.784 0.433327    
+## gazedirect:spatial1             -19.53059    1.91384 -10.205  &lt; 2e-16 ***
+## gazeaverted:spatial1            -24.86829    1.94018 -12.818  &lt; 2e-16 ***
+## gazedirect:imitative1:sias_cen    0.28829    0.14979   1.925 0.054275 .  
+## gazeaverted:imitative1:sias_cen  -0.38830    0.15190  -2.556 0.010582 *  
+## gazedirect:sias_cen:spatial1     -0.23425    0.14936  -1.568 0.116813    
+## gazeaverted:sias_cen:spatial1    -0.01282    0.15124  -0.085 0.932446    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## convergence code: 0
+## unable to evaluate scaled gradient
+## Model failed to converge: degenerate  Hessian with 1 negative eigenvalues</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># simple slopes</span></a>
+<a class="sourceLine" id="cb15-2" title="2">m.sias.slopes &lt;-<span class="st"> </span>interactions<span class="op">::</span><span class="kw">sim_slopes</span>(m.sias.gaze, <span class="dt">pred=</span>sias_cen, <span class="dt">modx=</span>imitative, <span class="dt">mod2=</span>gaze)</a>
+<a class="sourceLine" id="cb15-3" title="3">huxtable<span class="op">::</span><span class="kw">as_huxtable</span>(m.sias.slopes)</a></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<col><col><tr>
+<td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = direct</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Value of imitative</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Slope of sias_cen</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.591149566599699 (1.32358734617725)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.87976523533964 (1.31006398626995)</td>
+</tr>
+<tr>
+<td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = averted</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Value of imitative</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Slope of sias_cen</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.846705258060077 (1.33692648668661)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.456336720340426 (1.31606772487206)</td>
+</tr>
+</table>
+
+</div>
+</div>
+<div id="sps" class="section level2">
+<h2>SPS</h2>
+<div id="main-results-2" class="section level3">
+<h3>Main results</h3>
+<p>The GLMM revealed a significant 3-way interaction between <code>Imitative:Gaze:SPS</code>, which suggests that the influence of gaze on imitative compatibility varied as a function of social anxiety.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># run model</span></a>
+<a class="sourceLine" id="cb16-2" title="2">m.sps &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>sps_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>sps_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb16-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="kw">summary</span>(m.sps, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ imitative * gaze * sps_cen + spatial * gaze * sps_cen +  
+##     (1 | id) + (1 | stimulus)
+##    Data: d.exploratory
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163758.5 163871.7 -81864.2 163728.5    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3582 -0.6825 -0.0958  0.5769  5.2994 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.180e+01  5.639056
+##  id       (Intercept) 6.496e+02 25.486731
+##  Residual             6.052e-05  0.007779
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                           Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)              528.38811   16.16606  32.685  &lt; 2e-16 ***
+## imitative1               -10.16225    1.36354  -7.453 9.14e-14 ***
+## gaze1                     -4.47424    1.18970  -3.761 0.000169 ***
+## sps_cen                   -1.21158    1.63548  -0.741 0.458809    
+## spatial1                 -22.20578    1.32512 -16.758  &lt; 2e-16 ***
+## imitative1:gaze1          -2.90793    2.67608  -1.087 0.277196    
+## imitative1:sps_cen        -0.17866    0.15228  -1.173 0.240705    
+## gaze1:sps_cen             -0.22856    0.15255  -1.498 0.134079    
+## gaze1:spatial1             5.14600    2.10771   2.442 0.014626 *  
+## sps_cen:spatial1          -0.17373    0.15255  -1.139 0.254774    
+## imitative1:gaze1:sps_cen   0.72389    0.30414   2.380 0.017307 *  
+## gaze1:sps_cen:spatial1    -0.02032    0.30439  -0.067 0.946780    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## convergence code: 0
+## unable to evaluate scaled gradient
+## Model failed to converge: degenerate  Hessian with 1 negative eigenvalues</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># MODEL DIAGNOSTICS</span></a>
+<a class="sourceLine" id="cb18-2" title="2"></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="co"># residual plots to check linearity and homocedasticity</span></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="kw">plot</span>(<span class="kw">fitted</span>(m.sps), <span class="kw">residuals</span>(m.sps), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Fitted Values&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Residuals&#39;</span>, <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="kw">hist</span>(<span class="kw">residuals</span>(m.sps), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Residuals&#39;</span>)</a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="kw">qqnorm</span>(<span class="kw">residuals</span>(m.sps), <span class="dt">main=</span><span class="st">&#39;&#39;</span>)</a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="kw">layout</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb18-9" title="9"></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="co"># multicolinearity</span></a>
+<a class="sourceLine" id="cb18-11" title="11">car<span class="op">::</span><span class="kw">vif</span>(m.sps)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># predicted effects</span></a>
+<a class="sourceLine" id="cb19-2" title="2">m.sps.interact &lt;-<span class="st"> </span><span class="kw">get_model_data</span>(m.sps, <span class="dt">type=</span><span class="st">&#39;pred&#39;</span>, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&#39;sps_cen&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;gaze&#39;</span>))</a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="kw">names</span>(m.sps.interact)[<span class="kw">names</span>(m.sps.interact) <span class="op">==</span><span class="st"> &#39;x&#39;</span>] &lt;-<span class="st"> &#39;sps&#39;</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="kw">names</span>(m.sps.interact)[<span class="kw">names</span>(m.sps.interact) <span class="op">==</span><span class="st"> &#39;group&#39;</span>] &lt;-<span class="st"> &#39;imitative&#39;</span></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="kw">names</span>(m.sps.interact)[<span class="kw">names</span>(m.sps.interact) <span class="op">==</span><span class="st"> &#39;facet&#39;</span>] &lt;-<span class="st"> &#39;gaze&#39;</span></a>
+<a class="sourceLine" id="cb19-6" title="6"></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="co"># back-transform mean-centered values for plotting</span></a>
+<a class="sourceLine" id="cb19-8" title="8">m.sps.interact<span class="op">$</span>sps &lt;-<span class="st"> </span>m.sps.interact<span class="op">$</span>sps <span class="op">+</span><span class="st"> </span><span class="kw">attr</span>(d.exploratory<span class="op">$</span>sps_cen, <span class="st">&#39;scaled:center&#39;</span>)</a>
+<a class="sourceLine" id="cb19-9" title="9"></a>
+<a class="sourceLine" id="cb19-10" title="10"><span class="co"># plot predicted effects</span></a>
+<a class="sourceLine" id="cb19-11" title="11">fig.sps.interact &lt;-<span class="st"> </span><span class="kw">ggplot</span>(m.sps.interact, <span class="kw">aes</span>(<span class="dt">y=</span>predicted, <span class="dt">x=</span>sps, <span class="dt">group=</span>imitative)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-12" title="12"></a>
+<a class="sourceLine" id="cb19-13" title="13"><span class="st">  </span><span class="co"># predicted fixed effect of mood</span></a>
+<a class="sourceLine" id="cb19-14" title="14"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>conf.low, <span class="dt">ymax=</span>conf.high, <span class="dt">fill=</span>imitative), <span class="dt">alpha=</span>.<span class="dv">15</span>, <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-15" title="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype=</span>imitative, <span class="dt">color=</span>imitative), <span class="dt">size=</span>line_width<span class="fl">-0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-16" title="16"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>gaze, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">gaze=</span>gaze_labels)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-17" title="17"></a>
+<a class="sourceLine" id="cb19-18" title="18"><span class="st">  </span><span class="co"># format</span></a>
+<a class="sourceLine" id="cb19-19" title="19"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-20" title="20"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-21" title="21"><span class="st">  </span><span class="kw">scale_linetype_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;solid&quot;</span>, <span class="st">&quot;solid&quot;</span>), <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-22" title="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;SPS&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-23" title="23"><span class="st">  </span><span class="co">#ylim(500, 560) +</span></a>
+<a class="sourceLine" id="cb19-24" title="24"><span class="st">  </span>my_theme <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-25" title="25"><span class="st">  </span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb19-26" title="26">    <span class="dt">panel.spacing=</span><span class="kw">unit</span>(<span class="dv">1</span>, <span class="st">&#39;lines&#39;</span>),</a>
+<a class="sourceLine" id="cb19-27" title="27">    <span class="dt">panel.border=</span><span class="kw">element_rect</span>(<span class="dt">colour=</span><span class="st">&#39;grey50&#39;</span>, <span class="dt">size=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb19-28" title="28">    <span class="dt">panel.grid.minor.x=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</a>
+<a class="sourceLine" id="cb19-29" title="29">    <span class="dt">panel.grid.major.y=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</a>
+<a class="sourceLine" id="cb19-30" title="30">    <span class="dt">axis.line=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb19-31" title="31">)</a>
+<a class="sourceLine" id="cb19-32" title="32">fig.sps.interact</a></code></pre></div>
+<p><img src="web_04_exploratory_files/figure-html/SPS_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="follow-up-tests-2" class="section level3">
+<h3>Follow-up tests</h3>
+<p>To follow-up the 3-way interaction, we tested the conditional effects of SPS on imitative compatibility for direct gaze and averted gaze conditions separately.</p>
+<p>Results from this GLMM indicated that the difference in RTs between imitatively incompatible and imitatively compatible trials (i.e. imitative effect) in averted gaze conditions increased as a function of social anxiety. For direct gaze, the difference between the slopes of SIAS on imitative compatible and incompatible was not significant.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># conditional effects for gaze levels</span></a>
+<a class="sourceLine" id="cb20-2" title="2">m.sps.gaze &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>gaze<span class="op">/</span>imitative<span class="op">*</span>sps_cen <span class="op">+</span><span class="st"> </span>gaze<span class="op">/</span>spatial<span class="op">*</span>sps_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="kw">summary</span>(m.sps.gaze, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ gaze/imitative * sps_cen + gaze/spatial * sps_cen + (1 |  
+##     id) + (1 | stimulus)
+##    Data: d.exploratory
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163758.5 163871.7 -81864.2 163728.5    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3582 -0.6825 -0.0958  0.5769  5.2994 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.180e+01  5.639085
+##  id       (Intercept) 6.495e+02 25.486168
+##  Residual             6.052e-05  0.007779
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                                Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)                    528.3954     3.4473 153.276  &lt; 2e-16 ***
+## gaze1                           -4.4735     1.3878  -3.223  0.00127 ** 
+## sps_cen                         -1.2122     0.3915  -3.096  0.00196 ** 
+## gazedirect:imitative1          -11.6165     1.9426  -5.980 2.23e-09 ***
+## gazeaverted:imitative1          -8.7087     1.9751  -4.409 1.04e-05 ***
+## gaze1:sps_cen                   -0.2285     0.1556  -1.469  0.14187    
+## gazedirect:spatial1            -19.6329     1.9437 -10.101  &lt; 2e-16 ***
+## gazeaverted:spatial1           -24.7790     1.9780 -12.527  &lt; 2e-16 ***
+## gazedirect:imitative1:sps_cen    0.1831     0.2168   0.845  0.39817    
+## gazeaverted:imitative1:sps_cen  -0.5407     0.2217  -2.439  0.01472 *  
+## gazedirect:sps_cen:spatial1     -0.1838     0.2174  -0.846  0.39773    
+## gazeaverted:sps_cen:spatial1    -0.1634     0.2222  -0.735  0.46205    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## convergence code: 0
+## unable to evaluate scaled gradient
+## Model failed to converge: degenerate  Hessian with 3 negative eigenvalues</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># simple slopes</span></a>
+<a class="sourceLine" id="cb22-2" title="2">m.sps.slopes &lt;-<span class="st"> </span>interactions<span class="op">::</span><span class="kw">sim_slopes</span>(m.sps.gaze, <span class="dt">pred=</span>sps_cen, <span class="dt">modx=</span>imitative, <span class="dt">mod2=</span>gaze)</a>
+<a class="sourceLine" id="cb22-3" title="3">huxtable<span class="op">::</span><span class="kw">as_huxtable</span>(m.sps.slopes)</a></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<col><col><tr>
+<td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = direct</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Value of imitative</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Slope of sps_cen</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-1.23599633361599 (1.86080822525529)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-1.41772264035333 (0.414347749999368)***</td>
+</tr>
+<tr>
+<td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = averted</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Value of imitative</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Slope of sps_cen</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-1.37075227247924 (0.412947038412147)***</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.827660614044301 (1.8536874468766)</td>
+</tr>
+</table>
+
+</div>
+</div>
+<div id="gars" class="section level2">
+<h2>GARS</h2>
+<div id="main-results-3" class="section level3">
+<h3>Main results</h3>
+<p>The GLMM revealed a significant 3-way interaction between <code>Imitative:Gaze:GARS</code>, which suggests that the influence of gaze on imitative compatibility varied as a function of gaze anxiety.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># run model</span></a>
+<a class="sourceLine" id="cb23-2" title="2">m.gars &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>gars_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>gars_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb23-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="kw">summary</span>(m.gars, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ imitative * gaze * gars_cen + spatial * gaze * gars_cen +  
+##     (1 | id) + (1 | stimulus)
+##    Data: d.exploratory
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163763.0 163876.2 -81866.5 163733.0    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3549 -0.6830 -0.0953  0.5773  5.2906 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.162e+01  5.623577
+##  id       (Intercept) 6.556e+02 25.604757
+##  Residual             6.056e-05  0.007782
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                            Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)               529.05740   10.21462  51.794  &lt; 2e-16 ***
+## imitative1                -10.29337    1.35248  -7.611 2.73e-14 ***
+## gaze1                      -4.63167    1.34897  -3.433 0.000596 ***
+## gars_cen                    0.33687    1.07629   0.313 0.754288    
+## spatial1                  -22.27009    1.34896 -16.509  &lt; 2e-16 ***
+## imitative1:gaze1           -2.47096    2.62792  -0.940 0.347078    
+## imitative1:gars_cen         0.04002    0.08746   0.458 0.647248    
+## gaze1:gars_cen             -0.06281    0.08721  -0.720 0.471346    
+## gaze1:spatial1              5.10874    2.64081   1.935 0.053047 .  
+## gars_cen:spatial1          -0.04763    0.08718  -0.546 0.584837    
+## imitative1:gaze1:gars_cen   0.35547    0.17410   2.042 0.041176 *  
+## gaze1:gars_cen:spatial1    -0.15370    0.17427  -0.882 0.377795    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## convergence code: 0
+## Model failed to converge with max|grad| = 0.0184215 (tol = 0.001, component 1)</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># MODEL DIAGNOSTICS</span></a>
+<a class="sourceLine" id="cb25-2" title="2"></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="co"># residual plots to check linearity and homocedasticity</span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="kw">plot</span>(<span class="kw">fitted</span>(m.gars), <span class="kw">residuals</span>(m.gars), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Fitted Values&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Residuals&#39;</span>, <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb25-6" title="6"><span class="kw">hist</span>(<span class="kw">residuals</span>(m.gars), <span class="dt">main=</span><span class="st">&#39;&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;Residuals&#39;</span>)</a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="kw">qqnorm</span>(<span class="kw">residuals</span>(m.gars), <span class="dt">main=</span><span class="st">&#39;&#39;</span>)</a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="kw">layout</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb25-9" title="9"></a>
+<a class="sourceLine" id="cb25-10" title="10"><span class="co"># multicolinearity</span></a>
+<a class="sourceLine" id="cb25-11" title="11">car<span class="op">::</span><span class="kw">vif</span>(m.gars)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># predicted effects</span></a>
+<a class="sourceLine" id="cb26-2" title="2">m.gars.interact &lt;-<span class="st"> </span><span class="kw">get_model_data</span>(m.gars, <span class="dt">type=</span><span class="st">&#39;pred&#39;</span>, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&#39;gars_cen&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;gaze&#39;</span>))</a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="kw">names</span>(m.gars.interact)[<span class="kw">names</span>(m.gars.interact) <span class="op">==</span><span class="st"> &#39;x&#39;</span>] &lt;-<span class="st"> &#39;gars&#39;</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="kw">names</span>(m.gars.interact)[<span class="kw">names</span>(m.gars.interact) <span class="op">==</span><span class="st"> &#39;group&#39;</span>] &lt;-<span class="st"> &#39;imitative&#39;</span></a>
+<a class="sourceLine" id="cb26-5" title="5"><span class="kw">names</span>(m.gars.interact)[<span class="kw">names</span>(m.gars.interact) <span class="op">==</span><span class="st"> &#39;facet&#39;</span>] &lt;-<span class="st"> &#39;gaze&#39;</span></a>
+<a class="sourceLine" id="cb26-6" title="6"></a>
+<a class="sourceLine" id="cb26-7" title="7"><span class="co"># back-transform mean-centered values for plotting</span></a>
+<a class="sourceLine" id="cb26-8" title="8">m.gars.interact<span class="op">$</span>gars &lt;-<span class="st"> </span>m.gars.interact<span class="op">$</span>gars <span class="op">+</span><span class="st"> </span><span class="kw">attr</span>(d.exploratory<span class="op">$</span>gars_cen, <span class="st">&#39;scaled:center&#39;</span>)</a>
+<a class="sourceLine" id="cb26-9" title="9"></a>
+<a class="sourceLine" id="cb26-10" title="10"><span class="co"># plot predicted effects</span></a>
+<a class="sourceLine" id="cb26-11" title="11">fig.gars.interact &lt;-<span class="st"> </span><span class="kw">ggplot</span>(m.gars.interact, <span class="kw">aes</span>(<span class="dt">y=</span>predicted, <span class="dt">x=</span>gars, <span class="dt">group=</span>imitative)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-12" title="12"></a>
+<a class="sourceLine" id="cb26-13" title="13"><span class="st">  </span><span class="co"># predicted fixed effect of mood</span></a>
+<a class="sourceLine" id="cb26-14" title="14"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>conf.low, <span class="dt">ymax=</span>conf.high, <span class="dt">fill=</span>imitative), <span class="dt">alpha=</span>.<span class="dv">15</span>, <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-15" title="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype=</span>imitative, <span class="dt">color=</span>imitative), <span class="dt">size=</span>line_width<span class="fl">-0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-16" title="16"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>gaze, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">gaze=</span>gaze_labels)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-17" title="17"></a>
+<a class="sourceLine" id="cb26-18" title="18"><span class="st">  </span><span class="co"># format</span></a>
+<a class="sourceLine" id="cb26-19" title="19"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-20" title="20"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-21" title="21"><span class="st">  </span><span class="kw">scale_linetype_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;solid&quot;</span>, <span class="st">&quot;solid&quot;</span>), <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-22" title="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;GARS&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-23" title="23"><span class="st">  </span><span class="co">#ylim(500, 560) +</span></a>
+<a class="sourceLine" id="cb26-24" title="24"><span class="st">  </span>my_theme <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-25" title="25"><span class="st">  </span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb26-26" title="26">    <span class="dt">panel.spacing=</span><span class="kw">unit</span>(<span class="dv">1</span>, <span class="st">&#39;lines&#39;</span>),</a>
+<a class="sourceLine" id="cb26-27" title="27">    <span class="dt">panel.border=</span><span class="kw">element_rect</span>(<span class="dt">colour=</span><span class="st">&#39;grey50&#39;</span>, <span class="dt">size=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb26-28" title="28">    <span class="dt">panel.grid.minor.x=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</a>
+<a class="sourceLine" id="cb26-29" title="29">    <span class="dt">panel.grid.major.y=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</a>
+<a class="sourceLine" id="cb26-30" title="30">    <span class="dt">axis.line=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb26-31" title="31">)</a>
+<a class="sourceLine" id="cb26-32" title="32">fig.gars.interact</a></code></pre></div>
+<p><img src="web_04_exploratory_files/figure-html/GARS_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="follow-up-tests-3" class="section level3">
+<h3>Follow-up tests</h3>
+<p>To follow-up the 3-way interaction, we tested the conditional effects of GARS on imitative compatibility for direct gaze and averted gaze conditions separately. The difference between the slopes of SIAS on imitative compatible and incompatible did not reach statistical significance for neither direct nor averted gaze.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co"># conditional effects for gaze levels</span></a>
+<a class="sourceLine" id="cb27-2" title="2">m.gars.gaze &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>gaze<span class="op">/</span>imitative<span class="op">*</span>gars_cen <span class="op">+</span><span class="st"> </span>gaze<span class="op">/</span>spatial<span class="op">*</span>gars_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</a>
+<a class="sourceLine" id="cb27-3" title="3">            <span class="dt">data=</span>d.exploratory, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="kw">summary</span>(m.gars.gaze, <span class="dt">corr=</span>F)</a></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: inverse.gaussian  ( identity )
+## Formula: rt ~ gaze/imitative * gars_cen + gaze/spatial * gars_cen + (1 |  
+##     id) + (1 | stimulus)
+##    Data: d.exploratory
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 163763.0 163876.2 -81866.5 163733.0    14032 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.3548 -0.6831 -0.0953  0.5774  5.2914 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev. 
+##  stimulus (Intercept) 3.163e+01  5.624152
+##  id       (Intercept) 6.556e+02 25.605322
+##  Residual             6.056e-05  0.007782
+## Number of obs: 14047, groups:  stimulus, 64; id, 60
+## 
+## Fixed effects:
+##                                  Estimate Std. Error t value Pr(&gt;|z|)    
+## (Intercept)                     528.94075   11.51886  45.920  &lt; 2e-16 ***
+## gaze1                            -4.62196    1.34410  -3.439 0.000585 ***
+## gars_cen                          0.34155    1.07784   0.317 0.751334    
+## gazedirect:imitative1           -11.54453    1.87243  -6.166 7.02e-10 ***
+## gazeaverted:imitative1           -9.04260    1.92887  -4.688 2.76e-06 ***
+## gaze1:gars_cen                   -0.06291    0.08721  -0.721 0.470682    
+## gazedirect:spatial1             -19.71359    1.88812 -10.441  &lt; 2e-16 ***
+## gazeaverted:spatial1            -24.84112    1.92146 -12.928  &lt; 2e-16 ***
+## gazedirect:imitative1:gars_cen    0.21730    0.12263   1.772 0.076387 .  
+## gazeaverted:imitative1:gars_cen  -0.13878    0.12416  -1.118 0.263647    
+## gazedirect:gars_cen:spatial1     -0.12540    0.12267  -1.022 0.306671    
+## gazeaverted:gars_cen:spatial1     0.02785    0.12386   0.225 0.822074    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## convergence code: 0
+## Model failed to converge with max|grad| = 0.00339191 (tol = 0.001, component 1)</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># simple slopes</span></a>
+<a class="sourceLine" id="cb29-2" title="2">m.gars.slopes &lt;-<span class="st"> </span>interactions<span class="op">::</span><span class="kw">sim_slopes</span>(m.gars.gaze, <span class="dt">pred=</span>gars_cen, <span class="dt">modx=</span>imitative, <span class="dt">mod2=</span>gaze)</a>
+<a class="sourceLine" id="cb29-3" title="3">huxtable<span class="op">::</span><span class="kw">as_huxtable</span>(m.gars.slopes)</a></code></pre></div>
+<table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
+<col><col><tr>
+<td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = direct</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Value of imitative</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Slope of gars_cen</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.417455090748242 (1.08116924053992)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.200523053866393 (1.08383773839611)</td>
+</tr>
+<tr>
+<td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = averted</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Value of imitative</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt; padding: 4pt 4pt 4pt 4pt;">Slope of gars_cen</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.303784592411418 (1.08432587151804)</td>
+</tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.442854508238305 (1.07888155032295)</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+<div id="attributed-meaning-of-gaze" class="section level1">
+<h1>Attributed meaning of gaze</h1>
+<p>After completing the automatic imitation task, participants rated on a 5-point scale (0 = not at all, 4 = a lot) 8 items how they had generally felt when watching the actors directing the gaze towards them (direct gaze) and away from them (averted gaze). The items were the following:</p>
+<ul>
+<li>I felt <em>observed</em> by the person.</li>
+<li>I felt <em>connected</em> with the person.</li>
+<li>I felt <em>accepted</em> by the person.</li>
+<li>I felt <em>distracted</em> by the person.</li>
+<li>I felt <em>pressured</em> by the person.</li>
+<li>I felt <em>ignored</em> by the person.</li>
+<li>I felt <em>relieved</em>.</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></a>
+<a class="sourceLine" id="cb30-2" title="2">gaze.descr &lt;-<span class="st"> </span>Rmisc<span class="op">::</span><span class="kw">summarySEwithin</span>(<span class="dt">data=</span>d.gaze, <span class="dt">measurevar=</span><span class="st">&#39;rating&#39;</span>,</a>
+<a class="sourceLine" id="cb30-3" title="3">                                        <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;feeling&#39;</span>, <span class="st">&#39;gaze&#39;</span>),</a>
+<a class="sourceLine" id="cb30-4" title="4">                                        <span class="dt">idvar=</span><span class="st">&#39;id&#39;</span>, <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</a>
+<a class="sourceLine" id="cb30-5" title="5"></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="co"># reorder levels of feelings for plotting</span></a>
+<a class="sourceLine" id="cb30-7" title="7">gaze.descr<span class="op">$</span>feeling &lt;-<span class="st"> </span><span class="kw">factor</span>(gaze.descr<span class="op">$</span>feeling, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;relieved&#39;</span>, <span class="st">&#39;rejected&#39;</span>, <span class="st">&#39;ignored&#39;</span>, <span class="st">&#39;pressured&#39;</span>, <span class="st">&#39;distracted&#39;</span>, <span class="st">&#39;accepted&#39;</span>,<span class="st">&#39;connected&#39;</span>, <span class="st">&#39;observed&#39;</span>))</a>
+<a class="sourceLine" id="cb30-8" title="8"></a>
+<a class="sourceLine" id="cb30-9" title="9"><span class="co"># figure</span></a>
+<a class="sourceLine" id="cb30-10" title="10">fig.gazemeaning &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gaze.descr, <span class="kw">aes</span>(<span class="dt">y=</span>rating, <span class="dt">x=</span>feeling, <span class="dt">group=</span>gaze, <span class="dt">fill=</span>gaze)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-11" title="11"></a>
+<a class="sourceLine" id="cb30-12" title="12"><span class="st">  </span><span class="co"># bar graphs with means and CI</span></a>
+<a class="sourceLine" id="cb30-13" title="13"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="st">&#39;dodge&#39;</span>, <span class="dt">width=</span><span class="fl">0.7</span>, <span class="dt">colour=</span><span class="st">&#39;black&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-14" title="14"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rating<span class="op">-</span>ci, <span class="dt">ymax=</span>rating<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="dv">-1</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.7</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-15" title="15"></a>
+<a class="sourceLine" id="cb30-16" title="16"><span class="st">  </span><span class="co"># flip coordinates to make the bar chart horizontal</span></a>
+<a class="sourceLine" id="cb30-17" title="17"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-18" title="18"></a>
+<a class="sourceLine" id="cb30-19" title="19"><span class="st">  </span><span class="co"># format</span></a>
+<a class="sourceLine" id="cb30-20" title="20"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>,<span class="dv">4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-21" title="21"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_gaze, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-22" title="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&#39;Ratings&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-23" title="23"><span class="st">  </span>my_theme <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-24" title="24"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb30-25" title="25">        <span class="dt">legend.title=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb30-26" title="26">        <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</a>
+<a class="sourceLine" id="cb30-27" title="27">        <span class="dt">legend.justification=</span><span class="st">&#39;right&#39;</span>,</a>
+<a class="sourceLine" id="cb30-28" title="28">        <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb30-29" title="29">        )</a>
+<a class="sourceLine" id="cb30-30" title="30">fig.gazemeaning</a></code></pre></div>
+<p><img src="web_04_exploratory_files/figure-html/GAZE_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>A paired-samples t-test was conducted for each item to compare ratings for direct and averted gaze conditions. The Holm–Bonferroni method was used to control for multiple comparisons.</p>
+<p>Participants reported feeling significantly more observed, connected with, accepted, distracted and pressured by the targets when they were directed the gaze towards them as compared to away from them. Conversely, averted gaze videos induced more feelings of being ignored and rejected by the target than direct gaze videos. No significant differences were found between gaze conditions with respect to feeling relieved.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># define variables to compare</span></a>
+<a class="sourceLine" id="cb31-2" title="2">gaze1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;direct&#39;</span>)</a>
+<a class="sourceLine" id="cb31-3" title="3">gaze2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;averted&#39;</span>)</a>
+<a class="sourceLine" id="cb31-4" title="4">feeling &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;observed&#39;</span>,<span class="st">&#39;connected&#39;</span>, <span class="st">&#39;accepted&#39;</span>, <span class="st">&#39;distracted&#39;</span>, <span class="st">&#39;pressured&#39;</span>, <span class="st">&#39;ignored&#39;</span>, <span class="st">&#39;rejected&#39;</span>,<span class="st">&#39;relieved&#39;</span>)</a>
+<a class="sourceLine" id="cb31-5" title="5">gaze.ttest.pairs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(feeling, gaze1, gaze2)</a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="co"># number of pairwise comparisons</span></a>
+<a class="sourceLine" id="cb31-8" title="8">ntests &lt;-<span class="st"> </span><span class="kw">nrow</span>(gaze.ttest.pairs)</a>
+<a class="sourceLine" id="cb31-9" title="9"></a>
+<a class="sourceLine" id="cb31-10" title="10"><span class="co"># create data frame for post-hoc tests results</span></a>
+<a class="sourceLine" id="cb31-11" title="11">gaze.ttest &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">12</span>, <span class="dt">nrow=</span>ntests))</a>
+<a class="sourceLine" id="cb31-12" title="12"><span class="kw">colnames</span>(gaze.ttest) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;feeling&#39;</span>, <span class="st">&#39;m_direct&#39;</span>, <span class="st">&#39;sd_direct&#39;</span>, <span class="st">&#39;m_averted&#39;</span>, <span class="st">&#39;sd_averted&#39;</span>, <span class="st">&#39;t&#39;</span>, <span class="st">&#39;df&#39;</span>, <span class="st">&#39;ci_lower&#39;</span>, <span class="st">&#39;ci_upper&#39;</span>, <span class="st">&#39;d&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;padjust&#39;</span>)</a>
+<a class="sourceLine" id="cb31-13" title="13"></a>
+<a class="sourceLine" id="cb31-14" title="14"><span class="co"># loop though each pairwise comparison</span></a>
+<a class="sourceLine" id="cb31-15" title="15"><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ntests) {</a>
+<a class="sourceLine" id="cb31-16" title="16"></a>
+<a class="sourceLine" id="cb31-17" title="17">  gaze.ttest<span class="op">$</span>feeling[t] &lt;-<span class="st"> </span><span class="kw">as.character</span>(gaze.ttest.pairs<span class="op">$</span>feeling[t])</a>
+<a class="sourceLine" id="cb31-18" title="18"></a>
+<a class="sourceLine" id="cb31-19" title="19">  var1 &lt;-<span class="st"> </span><span class="kw">subset</span>(d.gaze<span class="op">$</span>rating, d.gaze<span class="op">$</span>gaze<span class="op">==</span><span class="st">&#39;direct&#39;</span> <span class="op">&amp;</span><span class="st"> </span>d.gaze<span class="op">$</span>feeling<span class="op">==</span>gaze.ttest<span class="op">$</span>feeling[t])</a>
+<a class="sourceLine" id="cb31-20" title="20">  var2 &lt;-<span class="st"> </span><span class="kw">subset</span>(d.gaze<span class="op">$</span>rating, d.gaze<span class="op">$</span>gaze<span class="op">==</span><span class="st">&#39;averted&#39;</span> <span class="op">&amp;</span><span class="st"> </span>d.gaze<span class="op">$</span>feeling<span class="op">==</span>gaze.ttest<span class="op">$</span>feeling[t])</a>
+<a class="sourceLine" id="cb31-21" title="21"></a>
+<a class="sourceLine" id="cb31-22" title="22">  gaze.ttest<span class="op">$</span>m_direct[t]   &lt;-<span class="st"> </span><span class="kw">mean</span>(var1)</a>
+<a class="sourceLine" id="cb31-23" title="23">  gaze.ttest<span class="op">$</span>sd_direct[t]  &lt;-<span class="st"> </span><span class="kw">sd</span>(var1)</a>
+<a class="sourceLine" id="cb31-24" title="24">  gaze.ttest<span class="op">$</span>m_averted[t]  &lt;-<span class="st"> </span><span class="kw">mean</span>(var2)</a>
+<a class="sourceLine" id="cb31-25" title="25">  gaze.ttest<span class="op">$</span>sd_averted[t] &lt;-<span class="st"> </span><span class="kw">sd</span>(var2)</a>
+<a class="sourceLine" id="cb31-26" title="26"></a>
+<a class="sourceLine" id="cb31-27" title="27">  gaze.ttest<span class="op">$</span>t[t]  &lt;-<span class="st"> </span><span class="kw">t.test</span>(var1, var2, <span class="dt">paired=</span><span class="ot">TRUE</span>)<span class="op">$</span>statistic</a>
+<a class="sourceLine" id="cb31-28" title="28">  gaze.ttest<span class="op">$</span>df[t] &lt;-<span class="st"> </span><span class="kw">t.test</span>(var1, var2, <span class="dt">paired=</span><span class="ot">TRUE</span>)<span class="op">$</span>parameter</a>
+<a class="sourceLine" id="cb31-29" title="29">  gaze.ttest<span class="op">$</span>p[t]  &lt;-<span class="st"> </span><span class="kw">t.test</span>(var1, var2, <span class="dt">paired=</span><span class="ot">TRUE</span>)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb31-30" title="30">  gaze.ttest<span class="op">$</span>ci_lower[t] &lt;-<span class="st"> </span><span class="kw">t.test</span>(var1, var2, <span class="dt">paired=</span><span class="ot">TRUE</span>)<span class="op">$</span>conf.int[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb31-31" title="31">  gaze.ttest<span class="op">$</span>ci_upper[t] &lt;-<span class="st"> </span><span class="kw">t.test</span>(var1, var2, <span class="dt">paired=</span><span class="ot">TRUE</span>)<span class="op">$</span>conf.int[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb31-32" title="32"></a>
+<a class="sourceLine" id="cb31-33" title="33">  gaze.ttest<span class="op">$</span>d[t] &lt;-<span class="st"> </span>lsr<span class="op">::</span><span class="kw">cohensD</span>(var1, var2, <span class="dt">method=</span><span class="st">&#39;paired&#39;</span>)</a>
+<a class="sourceLine" id="cb31-34" title="34"></a>
+<a class="sourceLine" id="cb31-35" title="35">}</a>
+<a class="sourceLine" id="cb31-36" title="36"></a>
+<a class="sourceLine" id="cb31-37" title="37"><span class="co"># apply multiple comparisons adjustment to p-values</span></a>
+<a class="sourceLine" id="cb31-38" title="38">gaze.ttest<span class="op">$</span>padjust &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(gaze.ttest<span class="op">$</span>p, <span class="dt">method=</span><span class="st">&#39;holm&#39;</span>)</a>
+<a class="sourceLine" id="cb31-39" title="39"></a>
+<a class="sourceLine" id="cb31-40" title="40"><span class="kw">colnames</span>(gaze.ttest) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;t&#39;</span>, <span class="st">&#39;df&#39;</span>, <span class="st">&#39;CI Lower&#39;</span>, <span class="st">&#39;CI Upper&#39;</span>, <span class="st">&#39;d&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;p-adjusted&#39;</span>)</a>
+<a class="sourceLine" id="cb31-41" title="41">knitr<span class="op">::</span><span class="kw">kable</span>(gaze.ttest, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-42" title="42"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&quot;center&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-43" title="43"><span class="st">  </span><span class="kw">add_header_above</span>(<span class="kw">c</span>(<span class="st">&#39; &#39;</span>=<span class="dv">1</span>, <span class="st">&#39;Direct gaze&#39;</span>=<span class="st"> </span><span class="dv">2</span>, <span class="st">&#39;Averted gaze&#39;</span>=<span class="dv">2</span>, <span class="st">&#39; &#39;</span>=<span class="dv">7</span>))</a></code></pre></div>
+<table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Summary statistics
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Direct gaze
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Averted gaze
+</div>
+</th>
+<th style="border-bottom:hidden" colspan="7">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+M
+</th>
+<th style="text-align:right;">
+SD
+</th>
+<th style="text-align:right;">
+M
+</th>
+<th style="text-align:right;">
+SD
+</th>
+<th style="text-align:right;">
+t
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+CI Lower
+</th>
+<th style="text-align:right;">
+CI Upper
+</th>
+<th style="text-align:right;">
+d
+</th>
+<th style="text-align:right;">
+p
+</th>
+<th style="text-align:right;">
+p-adjusted
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+observed
+</td>
+<td style="text-align:right;">
+1.73
+</td>
+<td style="text-align:right;">
+1.29
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+8.33
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+1.09
+</td>
+<td style="text-align:right;">
+1.78
+</td>
+<td style="text-align:right;">
+1.08
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+connected
+</td>
+<td style="text-align:right;">
+1.55
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+0.57
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:right;">
+7.15
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:right;">
+1.26
+</td>
+<td style="text-align:right;">
+0.92
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+accepted
+</td>
+<td style="text-align:right;">
+1.30
+</td>
+<td style="text-align:right;">
+1.14
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+0.70
+</td>
+<td style="text-align:right;">
+6.24
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.58
+</td>
+<td style="text-align:right;">
+1.12
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distracted
+</td>
+<td style="text-align:right;">
+2.12
+</td>
+<td style="text-align:right;">
+1.12
+</td>
+<td style="text-align:right;">
+1.28
+</td>
+<td style="text-align:right;">
+1.03
+</td>
+<td style="text-align:right;">
+5.05
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+1.16
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pressured
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+<td style="text-align:right;">
+1.11
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+3.95
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.32
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.51
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ignored
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+1.27
+</td>
+<td style="text-align:right;">
+1.18
+</td>
+<td style="text-align:right;">
+-6.27
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+-1.30
+</td>
+<td style="text-align:right;">
+-0.67
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rejected
+</td>
+<td style="text-align:right;">
+0.52
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:right;">
+1.03
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:right;">
+-3.60
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+-0.80
+</td>
+<td style="text-align:right;">
+-0.23
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+relieved
+</td>
+<td style="text-align:right;">
+0.93
+</td>
+<td style="text-align:right;">
+1.09
+</td>
+<td style="text-align:right;">
+1.12
+</td>
+<td style="text-align:right;">
+1.11
+</td>
+<td style="text-align:right;">
+-1.02
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+-0.54
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+0.31
+</td>
+<td style="text-align:right;">
+0.31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="session-info" class="section level1">
+<h1>Session info</h1>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<pre><code>## R version 3.6.0 (2019-04-26)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.15.4
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] emmeans_1.4.4        remef_1.0.6.9000     afex_0.26-0         
+##  [4] interactions_1.1.1   sjPlot_2.8.3         lmerTest_3.1-1      
+##  [7] lme4_1.1-21          Matrix_1.2-18        Rmisc_1.5           
+## [10] plyr_1.8.5           cowplot_1.0.0        RColorBrewer_1.1-2  
+## [13] GGally_1.5.0         RVAideMemoire_0.9-74 Hmisc_4.3-1         
+## [16] Formula_1.2-3        survival_3.1-8       lattice_0.20-38     
+## [19] patchwork_1.0.0      kableExtra_1.1.0     knitr_1.28          
+## [22] summarytools_0.9.5   forcats_0.4.0        stringr_1.4.0       
+## [25] dplyr_0.8.4          purrr_0.3.3          readr_1.3.1         
+## [28] tidyr_1.0.2          tibble_2.1.3         ggplot2_3.2.1       
+## [31] tidyverse_1.3.0     
+## 
+## loaded via a namespace (and not attached):
+##   [1] readxl_1.3.1        backports_1.1.5     jtools_2.0.2       
+##   [4] lazyeval_0.2.2      splines_3.6.0       TH.data_1.0-10     
+##   [7] pryr_0.1.4          digest_0.6.24       htmltools_0.4.0    
+##  [10] magick_2.3          fansi_0.4.1         magrittr_1.5       
+##  [13] checkmate_2.0.0     cluster_2.1.0       openxlsx_4.1.4     
+##  [16] modelr_0.1.5        matrixStats_0.55.0  sandwich_2.5-1     
+##  [19] rmdformats_0.3.7    jpeg_0.1-8.1        colorspace_1.4-1   
+##  [22] rvest_0.3.5         haven_2.2.0         xfun_0.12          
+##  [25] tcltk_3.6.0         crayon_1.3.4        jsonlite_1.6.1     
+##  [28] zoo_1.8-7           glue_1.3.1          gtable_0.3.0       
+##  [31] webshot_0.5.2       sjstats_0.17.9      sjmisc_2.8.3       
+##  [34] car_3.0-6           abind_1.4-5         rapportools_1.0    
+##  [37] scales_1.1.0        mvtnorm_1.0-12      DBI_1.1.0          
+##  [40] ggeffects_0.14.1    Rcpp_1.0.3          viridisLite_0.3.0  
+##  [43] xtable_1.8-4        performance_0.4.4   htmlTable_1.13.3   
+##  [46] foreign_0.8-75      htmlwidgets_1.5.1   httr_1.4.1         
+##  [49] ellipsis_0.3.0      acepack_1.4.1       pkgconfig_2.0.3    
+##  [52] reshape_0.8.8       farver_2.0.3        nnet_7.3-12        
+##  [55] dbplyr_1.4.2        tidyselect_1.0.0    labeling_0.3       
+##  [58] rlang_0.4.4         reshape2_1.4.3      effectsize_0.1.1   
+##  [61] munsell_0.5.0       cellranger_1.1.0    tools_3.6.0        
+##  [64] cli_2.0.1           generics_0.0.2      sjlabelled_1.1.3   
+##  [67] broom_0.5.4         evaluate_0.14       yaml_2.2.1         
+##  [70] fs_1.3.1            zip_2.0.4           pander_0.6.3       
+##  [73] nlme_3.1-144        xml2_1.2.2          compiler_3.6.0     
+##  [76] rstudioapi_0.11     curl_4.3            png_0.1-7          
+##  [79] huxtable_4.7.1      reprex_0.3.0        stringi_1.4.5      
+##  [82] highr_0.8           parameters_0.6.0    nloptr_1.2.1       
+##  [85] vctrs_0.2.2         pillar_1.4.3        lifecycle_0.1.0    
+##  [88] estimability_1.3    data.table_1.12.8   insight_0.8.2.1    
+##  [91] R6_2.4.1            latticeExtra_0.6-29 bookdown_0.17      
+##  [94] gridExtra_2.3       rio_0.5.16          codetools_0.2-16   
+##  [97] boot_1.3-24         MASS_7.3-51.5       assertthat_0.2.1   
+## [100] withr_2.1.2         multcomp_1.4-12     bayestestR_0.5.2   
+## [103] parallel_3.6.0      hms_0.5.3           grid_3.6.0         
+## [106] rpart_4.1-15        coda_0.19-3         minqa_1.2.4        
+## [109] rmarkdown_2.1       snakecase_0.11.0    carData_3.0-3      
+## [112] lsr_0.5             numDeriv_2016.8-1.1 lubridate_1.7.4    
+## [115] base64enc_0.1-3</code></pre>
+</div>
+
+    </div>
+    <div class="col-xs-2">
+        <div class="btn-toolbar">
+    <div class="btn-group">
+    <a href="#" class="btn btn-raised btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted">Code</span> <span class="text-muted caret"></span></a>
+    <ul class="dropdown-menu" style="min-width: 50px;">
+    <li><a id="rmd-show-all-code" href="#">Show All</a></li>
+    <li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+    </ul>
+    </div>
+    </div>
+        </div>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+    </div>
+  </div>
+
+<script>
+$(document).ready(function () {
+  // add bootstrap table styles to pandoc tables
+  $('tr.header').parent('thead').parent('table').addClass('table table-striped table-hover');
+
+  
+    $('.pages img')
+ 	  .addClass("image-lb");
+  $('.pages').magnificPopup({
+	      type:'image',
+	      closeOnContentClick: false,
+	      closeBtnInside: false,
+        delegate: 'img',
+	      gallery: {enabled: true },
+          removalDelay: 500,
+          callbacks: {
+              beforeOpen: function() {
+                // just a hack that adds mfp-anim class to markup
+                this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure mfp-with-anim');
+              }
+          },
+          mainClass: 'mfp-move-from-top',
+	      image: {
+	        verticalFit: true,
+            titleSrc: 'alt'
+	      }
+ 	    });
+ 	
+    
+    $('#toc ul li').first().addClass("active");
+    $('#toc ul li').attr("data-target", function() {
+        return($(this).children("a").attr("href"));
+    })
+    $('body .section.level1').first().addClass("active");
+    $('body .section.level1').not('.active').hide();
+    
+    $('#toc a[href*="#"]').click(function() {
+
+      var id = $(this).attr("href");
+      if (id === "#") return;
+      if (id.substring(0, 8) === "#dyntab-") return;
+      toggle_page(id);
+
+      // Menu
+      var menu_entry = $(".menu li[data-target='"+id+"']");
+      menu_entry.addClass("active");
+      $(".menu li").not(menu_entry).removeClass("active"); 
+      
+
+    });
+
+    function toggle_page(id) {
+      $(".page").not(page).removeClass("active").hide();
+      window.page = id;
+      var page = $(window.page);
+      window.location.hash = window.page;
+      //$(this).addClass("active");
+
+      page.show();
+
+      var totop = setInterval(function () {
+        $(".pages").animate({scrollTop: 0}, 0);
+      }, 10);
+
+      setTimeout(function () {
+        page.addClass("active");
+        setTimeout(function () {
+          clearInterval(totop);
+        }, 1000);
+      }, 100);
+
+      window.dispatchEvent(new Event('resize'));
+
+    }
+
+
+    $(".menu li").click(function () {
+
+      toggle_page($(this).data("target"));
+
+      // Menu
+      if (!$(this).data("target")) return;
+      if ($(this).is(".active")) return;
+      $(".menu li").not($(this)).removeClass("active");
+      $(this).addClass("active");
+
+    });
+  
+    
+
+
+    window.page = window.location.hash;
+    if (window.page != "") {
+      $(".menu").find("li[data-target=" + window.page + "]").trigger("click");
+    }
+
+    /* init material bootstrap js */
+    $.material.init();
+});
+</script>
+
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
