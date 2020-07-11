@@ -244,21 +244,22 @@ $(document).ready(function () {
 </div>
 <div id="model-specification" class="section level1">
 <h1>Model specification</h1>
-<p>To test our hypotheses, we fitted single-trial data to the following model:</p>
+<p>To test our hypotheses, we fitted RT and ER data to the following model:</p>
 <pre><code>Condensed form:
   DV ~ Imitative*Gaze*AQ + Spatial*Gaze*AQ + (1|ID) + (1|Stimulus)
 
 Extended form:
-  DV ~ Imitative + Spatial + Gaze + AQ + Imitative:Gaze + Spatial:Gaze + Imitative:AQ + 
-    Spatial:AQ + Gaze:AQ + Imitative:Gaze:AQ + Spatial:Gaze:AQ + (1|ID) + (1|Stimulus)</code></pre>
+  DV ~ Imitative + Spatial + Gaze + AQ + Gaze:Imitative + Gaze:Spatial + 
+    AQ:Imitative + AQ:Spatial + AQ:Gaze + AQ:Gaze:Imitative +
+    AQ:Gaze:Spatial + (1|ID) + (1|Stimulus)</code></pre>
 <p>Separate models were ran for RT and ER data (dependent variables).</p>
 <div id="fixed-effects" class="section level2">
 <h2>Fixed effects</h2>
 <p>According to our hypotheses, the main fixed effects of interest were:</p>
 <ol style="list-style-type: decimal">
 <li>Main effects of <code>Imitative</code> and <code>Spatial</code>, which would indicate the occurrence of compatibility effects;</li>
-<li>The 2-way interactions <code>Imitative:Gaze</code> and <code>Spatial:Gaze</code>, which would show that the degree of the corresponding compatibility effects depends on whether the target directed the gaze towards or away from the participant (<em>Hypothesis 1</em>);</li>
-<li>The 3-way interactions <code>Imitative:Gaze:AQ</code> and <code>Spatial:Gaze:AQ</code>, which would suggest that autistic traits modulate the influence of gaze on imitative or spatial compatibility (<em>Hypothesis 2</em>).</li>
+<li>The 2-way interactions <code>Gaze:Imitative</code> and <code>Gaze:Spatial</code>, which would show that the degree of the corresponding compatibility effects depends on whether the target directed the gaze towards or away from the participant (<em>Hypothesis 1</em>);</li>
+<li>The 3-way interactions <code>AQ:Gaze:Imitative</code> and <code>AQ:Gaze:Spatial</code>, which would suggest that autistic traits modulate the influence of gaze on imitative or spatial compatibility (<em>Hypothesis 2</em>).</li>
 </ol>
 <p>Note that we did not include any 2-, 3- or 4-way interactions containing <code>Spatial:Imitative</code> as we did not have any a-priori hypothesis about interaction effects between spatial and imitative compatibility. Including these predictors in the model also led to further issues with model convergence and singular fit.</p>
 <p>Effect coding contrasts were set for all categorical predictors (i.e. <code>Imitative</code>, <code>Spatial</code>, <code>Gaze</code>). The continuous predictor (<code>AQ</code>) was mean-centered.</p>
@@ -266,8 +267,8 @@ Extended form:
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co"># ~~~~~~~~~~~~~~~</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="co"># set effect coding contrasts</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="kw">contrasts</span>(d.trial.rt<span class="op">$</span>gaze)      &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [direct - averted]</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">contrasts</span>(d.trial.rt<span class="op">$</span>spatial)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [compt - incompt]</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">contrasts</span>(d.trial.rt<span class="op">$</span>imitative) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [compt - incompt]</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">contrasts</span>(d.trial.rt<span class="op">$</span>spatial)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>) <span class="co"># [incompt - compt]</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">contrasts</span>(d.trial.rt<span class="op">$</span>imitative) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>) <span class="co"># [incompt - compt]</span></span>
 <span id="cb3-7"><a href="#cb3-7"></a></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="co"># center continuous predictors</span></span>
 <span id="cb3-9"><a href="#cb3-9"></a>d.trial.rt<span class="op">$</span>aq_cen &lt;-<span class="st"> </span><span class="kw">scale</span>(d.trial.rt<span class="op">$</span>aq, <span class="dt">center=</span>T, <span class="dt">scale=</span>F)</span>
@@ -276,8 +277,8 @@ Extended form:
 <span id="cb3-12"><a href="#cb3-12"></a><span class="co"># ~~~~~~~~~~~~</span></span>
 <span id="cb3-13"><a href="#cb3-13"></a><span class="co"># set effect coding contrasts</span></span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="kw">contrasts</span>(d.trial.er<span class="op">$</span>gaze)      &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [direct - averted]</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="kw">contrasts</span>(d.trial.er<span class="op">$</span>spatial)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [compt - incompt]</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="kw">contrasts</span>(d.trial.er<span class="op">$</span>imitative) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [compt - incompt]</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="kw">contrasts</span>(d.trial.er<span class="op">$</span>spatial)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>) <span class="co"># [incompt - compt]</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="kw">contrasts</span>(d.trial.er<span class="op">$</span>imitative) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>) <span class="co"># [incompt - compt]</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a></span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="co"># center continuous predictors</span></span>
 <span id="cb3-19"><a href="#cb3-19"></a>d.trial.er<span class="op">$</span>aq_cen &lt;-<span class="st"> </span><span class="kw">scale</span>(d.trial.er<span class="op">$</span>aq, <span class="dt">center=</span>T, <span class="dt">scale=</span>F)</span></code></pre></div>
@@ -293,7 +294,7 @@ Extended form:
 <p>To select the response distribution that best fitted the observed RT data, we compared GLMMs with Gaussian distribution, Gamma distribution and Inverse Gaussian distribution. The latter two represent right skewed unimodal distributions with continuous responses greater than or equal to 0, which make them good candidates to approximate the observed RT responses (Lo &amp; Andrews, 2015). All models used the Identity link function, as we assume that our manipulations linearly affected the RT, in line with mental chronometry perspectives.</p>
 <p>Visual inspection of the residual plots showed that both the Gamma and Inverse Gaussian distribution had lower heteroscedasity as compared to the Gaussian distribution.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># model</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>formula &lt;-<span class="st"> </span><span class="kw">formula</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>aq <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>aq <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus))</span>
+<span id="cb4-2"><a href="#cb4-2"></a>formula &lt;-<span class="st"> </span><span class="kw">formula</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus))</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="co"># gaussian distribution, identity link (raw rt)</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>m.gaus &lt;-<span class="st"> </span><span class="kw">lmer</span>(formula, <span class="dt">data=</span>d.trial.rt, <span class="dt">REML=</span><span class="ot">FALSE</span>)</span>
@@ -304,7 +305,7 @@ Extended form:
 <span id="cb4-10"><a href="#cb4-10"></a></span>
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co"># inverse gaussian distribution, identity link (raw rt)</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a>m.invgaus &lt;-<span class="st"> </span><span class="kw">glmer</span>(formula, <span class="dt">data=</span>d.trial.rt, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</span>
-<span id="cb4-13"><a href="#cb4-13"></a>                   <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;bobyqa&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</span></code></pre></div>
+<span id="cb4-13"><a href="#cb4-13"></a>                   <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;nloptwrap&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">algorithm=</span><span class="st">&#39;NLOPT_LN_NELDERMEAD&#39;</span>)))</span></code></pre></div>
 <div id="gaussian-distribution" class="section level4">
 <h4>Gaussian distribution</h4>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># residual plots to check linearity and homocedasticity</span></span>
@@ -347,10 +348,10 @@ Extended form:
 <pre><code>## Data: d.trial.rt
 ## Models:
 ## m.gaus: formula
-## m.gamma: rt ~ imitative * gaze * aq + spatial * gaze * aq + (1 | id) + 
-## m.gamma:     (1 | stimulus)
-## m.invgaus: rt ~ imitative * gaze * aq + spatial * gaze * aq + (1 | id) + 
-## m.invgaus:     (1 | stimulus)
+## m.gamma: rt ~ imitative * gaze * aq_cen + spatial * gaze * aq_cen + (1 | 
+## m.gamma:     id) + (1 | stimulus)
+## m.invgaus: rt ~ imitative * gaze * aq_cen + spatial * gaze * aq_cen + (1 | 
+## m.invgaus:     id) + (1 | stimulus)
 ##           npar    AIC    BIC logLik deviance   Chisq Df Pr(&gt;Chisq)    
 ## m.gaus      15 165552 165665 -82761   165522                          
 ## m.gamma     15 163864 163977 -81917   163834 1687.51  0  &lt; 2.2e-16 ***
@@ -360,21 +361,7 @@ Extended form:
 </div>
 <div id="error-rates" class="section level3">
 <h3>Error rates</h3>
-<p>For the GLMM with ER data, we used a <em>binomial distribution</em> (mixed-effect logistic regression) to conform to the binary nature of the dependent variable (correct, incorrect response).</p>
-<!-- # Data sets  -->
-<!-- ## Reaction times -->
-<!-- The data set used for the GLMM on RT data contains the following variables: -->
-<!-- ```{r RT_Dataset} -->
-<!-- str(d.trial.rt[c('id', 'gaze', 'spatial', 'imitative', 'stimulus', 'aq', 'rt')], give.attr=FALSE) -->
-<!-- summary(d.trial.rt[c('id', 'gaze', 'spatial', 'imitative', 'stimulus', 'aq', 'rt')]) -->
-<!-- ``` -->
-<!-- ## Error rates -->
-<!-- The data set used for the GLMM on ER data contains the following variables: -->
-<!-- ```{r ER_Dataset} -->
-<!-- str(d.trial.er[c('id', 'gaze', 'spatial', 'imitative', 'stimulus', 'aq', 'error')], give.attr=FALSE) -->
-<!-- summary(d.trial.er[c('id', 'gaze', 'spatial', 'imitative', 'stimulus', 'aq', 'error')]) -->
-<!-- ``` -->
-<!-- `error` indicates whether the response was correct (0) or incorrect (1).  -->
+<p>For the GLMM with ER data, we used a <em>binomial distribution</em> (i.e. mixed-effects logistic regression) to conform to the binary nature of the dependent variable (correct, incorrect response).</p>
 </div>
 </div>
 </div>
@@ -605,162 +592,137 @@ incompt
 </div>
 <div id="glmm" class="section level2">
 <h2>GLMM</h2>
-<p>The GLMM on RT data revealed significant main effects of <code>Imitative</code>, <code>Spatial</code> and <code>Gaze</code>. The predicted 2-way interactions <code>Imitative:Gaze</code> and <code>Spatial:Gaze</code> did not reach statistical significance. In line with our second hypothesis, we found a significant 3-way interaction between <code>Imitative:Gaze:AQ</code>.</p>
+<p>The GLMM on RT data revealed significant main effects of <code>Imitative</code>, <code>Spatial</code> and <code>Gaze</code>. The predicted 2-way interactions <code>Gaze:Imitative</code> and <code>Gaze:Spatial</code> did not reach statistical significance. In line with our second hypothesis, we found a significant 3-way interaction between <code>AQ:Gaze:Imitative</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># fit model</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a>m.rt &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
-<span id="cb15-3"><a href="#cb15-3"></a>            <span class="dt">data=</span>d.trial.rt, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="kw">summary</span>(m.rt, <span class="dt">corr=</span>F)</span></code></pre></div>
+<span id="cb15-3"><a href="#cb15-3"></a>            <span class="dt">data=</span>d.trial.rt, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</span>
+<span id="cb15-4"><a href="#cb15-4"></a>            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;nloptwrap&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">algorithm=</span><span class="st">&#39;NLOPT_LN_NELDERMEAD&#39;</span>)))</span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="kw">summary</span>(m.rt, <span class="dt">corr=</span>F)</span></code></pre></div>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: inverse.gaussian  ( identity )
 ## Formula: rt ~ imitative * gaze * aq_cen + spatial * gaze * aq_cen + (1 |  
 ##     id) + (1 | stimulus)
 ##    Data: d.trial.rt
+## Control: 
+## glmerControl(optimizer = &quot;nloptwrap&quot;, optCtrl = list(algorithm = &quot;NLOPT_LN_NELDERMEAD&quot;))
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-## 163758.9 163872.2 -81864.5 163728.9    14032 
+## 163758.8 163872.0 -81864.4 163728.8    14032 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -3.3445 -0.6821 -0.0932  0.5783  5.3685 
+## -3.3418 -0.6812 -0.0938  0.5764  5.3626 
 ## 
 ## Random effects:
-##  Groups   Name        Variance  Std.Dev. 
-##  stimulus (Intercept) 3.177e+01  5.636701
-##  id       (Intercept) 6.568e+02 25.628596
-##  Residual             6.057e-05  0.007783
+##  Groups   Name        Variance  Std.Dev.
+##  stimulus (Intercept) 3.225e+01  5.67911
+##  id       (Intercept) 6.209e+02 24.91756
+##  Residual             6.068e-05  0.00779
 ## Number of obs: 14047, groups:  stimulus, 64; id, 60
 ## 
 ## Fixed effects:
 ##                          Estimate Std. Error t value Pr(&gt;|z|)    
-## (Intercept)             529.05317   22.32841  23.694  &lt; 2e-16 ***
-## imitative1              -10.23596    1.36298  -7.510 5.91e-14 ***
-## gaze1                    -4.62346    1.35459  -3.413 0.000642 ***
-## aq_cen                    0.28465    2.85316   0.100 0.920531    
-## spatial1                -22.31041    1.36179 -16.383  &lt; 2e-16 ***
-## imitative1:gaze1         -2.51288    2.68562  -0.936 0.349438    
-## imitative1:aq_cen        -0.44677    0.25026  -1.785 0.074223 .  
-## gaze1:aq_cen             -0.07869    0.25125  -0.313 0.754119    
-## gaze1:spatial1            5.10629    2.73224   1.869 0.061636 .  
-## aq_cen:spatial1           0.14930    0.25114   0.595 0.552175    
-## imitative1:gaze1:aq_cen   1.29431    0.50029   2.587 0.009678 ** 
-## gaze1:aq_cen:spatial1    -0.15767    0.50155  -0.314 0.753252    
+## (Intercept)             528.48697   14.35611  36.813  &lt; 2e-16 ***
+## imitative1               10.23486    1.35923   7.530 5.08e-14 ***
+## gaze1                    -4.62464    1.35774  -3.406 0.000659 ***
+## aq_cen                    0.28774    2.68152   0.107 0.914547    
+## spatial1                 22.30989    1.36543  16.339  &lt; 2e-16 ***
+## imitative1:gaze1          2.51160    2.68641   0.935 0.349826    
+## imitative1:aq_cen         0.44729    0.25028   1.787 0.073911 .  
+## gaze1:aq_cen             -0.07826    0.25130  -0.311 0.755472    
+## gaze1:spatial1           -5.10277    2.72215  -1.875 0.060856 .  
+## aq_cen:spatial1          -0.14931    0.25120  -0.594 0.552273    
+## imitative1:gaze1:aq_cen  -1.29481    0.50020  -2.589 0.009637 ** 
+## gaze1:aq_cen:spatial1     0.15746    0.50207   0.314 0.753809    
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## convergence code: 0
-## Model failed to converge with max|grad| = 0.00337561 (tol = 0.002, component 1)</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># ###############################################################################</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="co">#</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="co"># CONVERGENCE </span><span class="al">WARNING</span><span class="co">: &#39;Model failed to converge with max|grad|=0.00337561 (tol=0.001, component 1)&#39;</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># ---------------------</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="co"># Steps that we tried to solve convergence (but none worked!):</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="co">#</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># - double-check the model specification and the data</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a><span class="co"># - adjust stopping (convergence) tolerances for the nonlinear optimizer, using the</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#   optCtrl argument to [g]lmerControl (see “Convergence controls” below)</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="co"># - center and scale continuous predictor variables</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="co"># - restart the fit from the reported optimum, or from a point perturbed slightly</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="co">#   away from the reported optimum</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="co"># - use allFit to try the fit with all available optimizers. If all</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a><span class="co">#  optimizers converge to values that are practically equivalent, then we would</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a><span class="co">#  consider the convergence warnings to be false positives.</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a><span class="co">#       m.allfit &lt;- allFit(m.rt.spat)</span></span>
-<span id="cb17-17"><a href="#cb17-17"></a><span class="co">#       m-allfit.sum &lt;- summary(m.allfit)</span></span>
-<span id="cb17-18"><a href="#cb17-18"></a><span class="co">#</span></span>
-<span id="cb17-19"><a href="#cb17-19"></a><span class="co">#   (https://joshua-nugent.github.io/allFit/#still_no_convergence)</span></span>
-<span id="cb17-20"><a href="#cb17-20"></a><span class="co">#</span></span>
-<span id="cb17-21"><a href="#cb17-21"></a><span class="co">#   =&gt; None of the optimizers seem to make the model converge. However, there</span></span>
-<span id="cb17-22"><a href="#cb17-22"></a><span class="co">#   are no dramatic differences in the estimated values (both for fixed</span></span>
-<span id="cb17-23"><a href="#cb17-23"></a><span class="co">#   effects, random effects and significance). In this case, we opted for using</span></span>
-<span id="cb17-24"><a href="#cb17-24"></a><span class="co">#   the default settings of glmer.</span></span>
-<span id="cb17-25"><a href="#cb17-25"></a><span class="co">#</span></span>
-<span id="cb17-26"><a href="#cb17-26"></a><span class="co"># ###############################################################################</span></span></code></pre></div>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div id="main-effects" class="section level3">
 <h3>Main effects</h3>
-<p>The main effects of imitative and spatial compatibility confirmed the occurrence of compatibility effects: correct finger movements were faster when participants observed an imitatively (spatially) compatible action vs. an imitatively (spatially) incompatible action. The significant main effect of gaze indicates that responses following averted gaze were slower than following direct gaze.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># IMITATIVE COMPATIBILITY</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>desc.rt.ic &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb18-5"><a href="#cb18-5"></a></span>
-<span id="cb18-6"><a href="#cb18-6"></a><span class="co"># figure</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>fig.rt.ic &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.rt.ic, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>imitative, <span class="dt">color=</span>imitative)) <span class="op">+</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a></span>
-<span id="cb18-9"><a href="#cb18-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a></span>
-<span id="cb18-13"><a href="#cb18-13"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb18-14"><a href="#cb18-14"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative) <span class="op">+</span></span>
-<span id="cb18-15"><a href="#cb18-15"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb18-16"><a href="#cb18-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Imitative compatibility&#39;</span>) <span class="op">+</span></span>
-<span id="cb18-17"><a href="#cb18-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb18-18"><a href="#cb18-18"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">475</span>, <span class="dv">515</span>) <span class="op">+</span></span>
-<span id="cb18-19"><a href="#cb18-19"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb18-20"><a href="#cb18-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb18-21"><a href="#cb18-21"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb18-22"><a href="#cb18-22"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb18-23"><a href="#cb18-23"></a>    )</span>
-<span id="cb18-24"><a href="#cb18-24"></a></span>
-<span id="cb18-25"><a href="#cb18-25"></a><span class="co"># SPATIAL COMPATIBILITY</span></span>
-<span id="cb18-26"><a href="#cb18-26"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb18-27"><a href="#cb18-27"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb18-28"><a href="#cb18-28"></a>desc.rt.sc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb18-29"><a href="#cb18-29"></a></span>
-<span id="cb18-30"><a href="#cb18-30"></a><span class="co"># figure</span></span>
-<span id="cb18-31"><a href="#cb18-31"></a>fig.rt.sc &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.rt.sc, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>spatial, <span class="dt">color=</span>spatial)) <span class="op">+</span></span>
-<span id="cb18-32"><a href="#cb18-32"></a></span>
-<span id="cb18-33"><a href="#cb18-33"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb18-34"><a href="#cb18-34"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb18-35"><a href="#cb18-35"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb18-36"><a href="#cb18-36"></a></span>
-<span id="cb18-37"><a href="#cb18-37"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb18-38"><a href="#cb18-38"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_spatial) <span class="op">+</span></span>
-<span id="cb18-39"><a href="#cb18-39"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb18-40"><a href="#cb18-40"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Spatial compatibility&#39;</span>) <span class="op">+</span></span>
-<span id="cb18-41"><a href="#cb18-41"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb18-42"><a href="#cb18-42"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">475</span>, <span class="dv">515</span>) <span class="op">+</span></span>
-<span id="cb18-43"><a href="#cb18-43"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb18-44"><a href="#cb18-44"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb18-45"><a href="#cb18-45"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb18-46"><a href="#cb18-46"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </span>
-<span id="cb18-47"><a href="#cb18-47"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb18-48"><a href="#cb18-48"></a>    )</span>
-<span id="cb18-49"><a href="#cb18-49"></a></span>
-<span id="cb18-50"><a href="#cb18-50"></a><span class="co"># GAZE</span></span>
-<span id="cb18-51"><a href="#cb18-51"></a><span class="co"># ~~~~</span></span>
-<span id="cb18-52"><a href="#cb18-52"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb18-53"><a href="#cb18-53"></a>desc.rt.gaze &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb18-54"><a href="#cb18-54"></a></span>
-<span id="cb18-55"><a href="#cb18-55"></a><span class="co"># figure</span></span>
-<span id="cb18-56"><a href="#cb18-56"></a>fig.rt.gaze &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.rt.gaze, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">color=</span>gaze)) <span class="op">+</span></span>
-<span id="cb18-57"><a href="#cb18-57"></a></span>
-<span id="cb18-58"><a href="#cb18-58"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb18-59"><a href="#cb18-59"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb18-60"><a href="#cb18-60"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb18-61"><a href="#cb18-61"></a></span>
-<span id="cb18-62"><a href="#cb18-62"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb18-63"><a href="#cb18-63"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_gaze) <span class="op">+</span></span>
-<span id="cb18-64"><a href="#cb18-64"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Direct&#39;</span>, <span class="st">&#39;Averted&#39;</span>)) <span class="op">+</span></span>
-<span id="cb18-65"><a href="#cb18-65"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Gaze&#39;</span>) <span class="op">+</span></span>
-<span id="cb18-66"><a href="#cb18-66"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb18-67"><a href="#cb18-67"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">475</span>, <span class="dv">515</span>) <span class="op">+</span></span>
-<span id="cb18-68"><a href="#cb18-68"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb18-69"><a href="#cb18-69"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb18-70"><a href="#cb18-70"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb18-71"><a href="#cb18-71"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </span>
-<span id="cb18-72"><a href="#cb18-72"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb18-73"><a href="#cb18-73"></a>    )</span>
-<span id="cb18-74"><a href="#cb18-74"></a></span>
-<span id="cb18-75"><a href="#cb18-75"></a><span class="co"># combine figures</span></span>
-<span id="cb18-76"><a href="#cb18-76"></a><span class="co"># ~~~~~~~~~~~~~~~~</span></span>
-<span id="cb18-77"><a href="#cb18-77"></a>fig.rt.ic <span class="op">+</span><span class="st"> </span>fig.rt.sc <span class="op">+</span><span class="st"> </span>fig.rt.gaze</span></code></pre></div>
+<p>The main effects of <code>Imitative</code> and <code>Spatial</code> confirmed the occurrence of compatibility effects: correct finger movements were faster when participants observed an imitatively (spatially) compatible action vs. an imitatively (spatially) incompatible action. The significant main effect of <code>Gaze</code> indicates that responses following averted gaze were slower than following direct gaze.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># IMITATIVE COMPATIBILITY</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>desc.rt.ic &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># figure</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>fig.rt.ic &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.rt.ic, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>imitative, <span class="dt">color=</span>imitative)) <span class="op">+</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative) <span class="op">+</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Imitative compatibility&#39;</span>) <span class="op">+</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">475</span>, <span class="dv">515</span>) <span class="op">+</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb17-20"><a href="#cb17-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb17-21"><a href="#cb17-21"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb17-22"><a href="#cb17-22"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb17-23"><a href="#cb17-23"></a>    )</span>
+<span id="cb17-24"><a href="#cb17-24"></a></span>
+<span id="cb17-25"><a href="#cb17-25"></a><span class="co"># SPATIAL COMPATIBILITY</span></span>
+<span id="cb17-26"><a href="#cb17-26"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb17-27"><a href="#cb17-27"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb17-28"><a href="#cb17-28"></a>desc.rt.sc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb17-29"><a href="#cb17-29"></a></span>
+<span id="cb17-30"><a href="#cb17-30"></a><span class="co"># figure</span></span>
+<span id="cb17-31"><a href="#cb17-31"></a>fig.rt.sc &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.rt.sc, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>spatial, <span class="dt">color=</span>spatial)) <span class="op">+</span></span>
+<span id="cb17-32"><a href="#cb17-32"></a></span>
+<span id="cb17-33"><a href="#cb17-33"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb17-34"><a href="#cb17-34"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb17-35"><a href="#cb17-35"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb17-36"><a href="#cb17-36"></a></span>
+<span id="cb17-37"><a href="#cb17-37"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb17-38"><a href="#cb17-38"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_spatial) <span class="op">+</span></span>
+<span id="cb17-39"><a href="#cb17-39"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb17-40"><a href="#cb17-40"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Spatial compatibility&#39;</span>) <span class="op">+</span></span>
+<span id="cb17-41"><a href="#cb17-41"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb17-42"><a href="#cb17-42"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">475</span>, <span class="dv">515</span>) <span class="op">+</span></span>
+<span id="cb17-43"><a href="#cb17-43"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb17-44"><a href="#cb17-44"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb17-45"><a href="#cb17-45"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb17-46"><a href="#cb17-46"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </span>
+<span id="cb17-47"><a href="#cb17-47"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb17-48"><a href="#cb17-48"></a>    )</span>
+<span id="cb17-49"><a href="#cb17-49"></a></span>
+<span id="cb17-50"><a href="#cb17-50"></a><span class="co"># GAZE</span></span>
+<span id="cb17-51"><a href="#cb17-51"></a><span class="co"># ~~~~</span></span>
+<span id="cb17-52"><a href="#cb17-52"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb17-53"><a href="#cb17-53"></a>desc.rt.gaze &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb17-54"><a href="#cb17-54"></a></span>
+<span id="cb17-55"><a href="#cb17-55"></a><span class="co"># figure</span></span>
+<span id="cb17-56"><a href="#cb17-56"></a>fig.rt.gaze &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.rt.gaze, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">color=</span>gaze)) <span class="op">+</span></span>
+<span id="cb17-57"><a href="#cb17-57"></a></span>
+<span id="cb17-58"><a href="#cb17-58"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb17-59"><a href="#cb17-59"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb17-60"><a href="#cb17-60"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb17-61"><a href="#cb17-61"></a></span>
+<span id="cb17-62"><a href="#cb17-62"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb17-63"><a href="#cb17-63"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_gaze) <span class="op">+</span></span>
+<span id="cb17-64"><a href="#cb17-64"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Direct&#39;</span>, <span class="st">&#39;Averted&#39;</span>)) <span class="op">+</span></span>
+<span id="cb17-65"><a href="#cb17-65"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Gaze&#39;</span>) <span class="op">+</span></span>
+<span id="cb17-66"><a href="#cb17-66"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Predicted RT (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb17-67"><a href="#cb17-67"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">475</span>, <span class="dv">515</span>) <span class="op">+</span></span>
+<span id="cb17-68"><a href="#cb17-68"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb17-69"><a href="#cb17-69"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb17-70"><a href="#cb17-70"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb17-71"><a href="#cb17-71"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </span>
+<span id="cb17-72"><a href="#cb17-72"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb17-73"><a href="#cb17-73"></a>    )</span>
+<span id="cb17-74"><a href="#cb17-74"></a></span>
+<span id="cb17-75"><a href="#cb17-75"></a><span class="co"># combine figures</span></span>
+<span id="cb17-76"><a href="#cb17-76"></a><span class="co"># ~~~~~~~~~~~~~~~~</span></span>
+<span id="cb17-77"><a href="#cb17-77"></a>fig.rt.ic <span class="op">+</span><span class="st"> </span>fig.rt.sc <span class="op">+</span><span class="st"> </span>fig.rt.gaze</span></code></pre></div>
 <p><img src="web_03_confirmatory_glmm_files/figure-html/RT_MainEffects_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>descr.rt.maineffects &lt;-<span class="st"> </span><span class="kw">cbind</span>(desc.rt.ic[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.rt.sc[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.rt.gaze[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)])</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">colnames</span>(descr.rt.maineffects) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Imitative&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Spatial&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
-<span id="cb19-3"><a href="#cb19-3"></a></span>
-<span id="cb19-4"><a href="#cb19-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.rt.maineffects, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics for main effects (RT)&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>descr.rt.maineffects &lt;-<span class="st"> </span><span class="kw">cbind</span>(desc.rt.ic[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.rt.sc[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.rt.gaze[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)])</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">colnames</span>(descr.rt.maineffects) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Imitative&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Spatial&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.rt.maineffects, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics for main effects (RT)&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
 <table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for main effects (RT)
@@ -927,83 +889,78 @@ averted
 </div>
 <div id="way-interaction" class="section level3">
 <h3>3-way interaction</h3>
-<p>The significant 3-way interaction between <code>Imitative:Gaze:AQ</code> suggests that the influence of gaze on imitative compatibility varied as a function of autistic traits. To follow-up the 3-way interaction, we tested the conditional effects of AQ on imitative compatibility for direct gaze and averted gaze conditions separately.</p>
+<p>The significant 3-way interaction between <code>AQ:Imitative:Gaze</code> suggests that the influence of gaze on imitative compatibility varied as a function of autistic traits. To follow-up the 3-way interaction, we tested the conditional effects of AQ on imitative compatibility for direct gaze and averted gaze conditions separately.</p>
 <p>Results from this GLMM indicated that the difference in RTs between imitatively incompatible and imitatively compatible trials (i.e., imitative effect) following averted gaze increased with the level of autistic traits. For direct gaze, however, the slopes for the effect of AQ on imitative compatible and incompatible conditions did not significantly differ.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># predicted effects</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>rt.interact.pred &lt;-<span class="st"> </span><span class="kw">get_model_data</span>(m.rt, <span class="dt">type=</span><span class="st">&#39;pred&#39;</span>, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&#39;aq_cen&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;gaze&#39;</span>))</span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="kw">names</span>(rt.interact.pred)[<span class="kw">names</span>(rt.interact.pred)<span class="op">==</span><span class="st">&#39;x&#39;</span>] &lt;-<span class="st"> &#39;aq&#39;</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="kw">names</span>(rt.interact.pred)[<span class="kw">names</span>(rt.interact.pred)<span class="op">==</span><span class="st">&#39;group&#39;</span>] &lt;-<span class="st"> &#39;imitative&#39;</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="kw">names</span>(rt.interact.pred)[<span class="kw">names</span>(rt.interact.pred)<span class="op">==</span><span class="st">&#39;facet&#39;</span>] &lt;-<span class="st"> &#39;gaze&#39;</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="co"># back-transform mean-centered AQ values for plotting</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>rt.interact.pred<span class="op">$</span>aq &lt;-<span class="st"> </span>rt.interact.pred<span class="op">$</span>aq <span class="op">+</span><span class="st"> </span><span class="kw">attr</span>(d.trial.rt<span class="op">$</span>aq_cen, <span class="st">&#39;scaled:center&#39;</span>)</span>
-<span id="cb20-9"><a href="#cb20-9"></a></span>
-<span id="cb20-10"><a href="#cb20-10"></a><span class="co"># plot predicted effects</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a>fig.rt.interact &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rt.interact.pred, <span class="kw">aes</span>(<span class="dt">y=</span>predicted, <span class="dt">x=</span>aq, <span class="dt">group=</span>imitative)) <span class="op">+</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a></span>
-<span id="cb20-13"><a href="#cb20-13"></a><span class="st">  </span><span class="co"># predicted fixed effect of mood</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>conf.low, <span class="dt">ymax=</span>conf.high, <span class="dt">fill=</span>imitative), <span class="dt">alpha=</span>.<span class="dv">15</span>, <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype=</span>imitative, <span class="dt">color=</span>imitative), <span class="dt">size=</span>line_width<span class="fl">-0.25</span>) <span class="op">+</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>gaze, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">gaze=</span>gaze_labels)) <span class="op">+</span></span>
-<span id="cb20-17"><a href="#cb20-17"></a></span>
-<span id="cb20-18"><a href="#cb20-18"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb20-19"><a href="#cb20-19"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb20-20"><a href="#cb20-20"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb20-21"><a href="#cb20-21"></a><span class="st">  </span><span class="kw">scale_linetype_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;solid&#39;</span>, <span class="st">&#39;solid&#39;</span>), <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb20-22"><a href="#cb20-22"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;AQ&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb20-23"><a href="#cb20-23"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb20-24"><a href="#cb20-24"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb20-25"><a href="#cb20-25"></a>    <span class="dt">panel.grid.minor=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>),</span>
-<span id="cb20-26"><a href="#cb20-26"></a>  )</span>
-<span id="cb20-27"><a href="#cb20-27"></a>fig.rt.interact</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># predicted effects</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>rt.interact.pred &lt;-<span class="st"> </span><span class="kw">get_model_data</span>(m.rt, <span class="dt">type=</span><span class="st">&#39;pred&#39;</span>, <span class="dt">terms=</span><span class="kw">c</span>(<span class="st">&#39;aq_cen&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;gaze&#39;</span>))</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="kw">names</span>(rt.interact.pred)[<span class="kw">names</span>(rt.interact.pred)<span class="op">==</span><span class="st">&#39;x&#39;</span>] &lt;-<span class="st"> &#39;aq&#39;</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="kw">names</span>(rt.interact.pred)[<span class="kw">names</span>(rt.interact.pred)<span class="op">==</span><span class="st">&#39;group&#39;</span>] &lt;-<span class="st"> &#39;imitative&#39;</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="kw">names</span>(rt.interact.pred)[<span class="kw">names</span>(rt.interact.pred)<span class="op">==</span><span class="st">&#39;facet&#39;</span>] &lt;-<span class="st"> &#39;gaze&#39;</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="co"># back-transform mean-centered AQ values for plotting</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a>rt.interact.pred<span class="op">$</span>aq &lt;-<span class="st"> </span>rt.interact.pred<span class="op">$</span>aq <span class="op">+</span><span class="st"> </span><span class="kw">attr</span>(d.trial.rt<span class="op">$</span>aq_cen, <span class="st">&#39;scaled:center&#39;</span>)</span>
+<span id="cb19-9"><a href="#cb19-9"></a></span>
+<span id="cb19-10"><a href="#cb19-10"></a><span class="co"># plot predicted effects</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>fig.rt.interact &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rt.interact.pred, <span class="kw">aes</span>(<span class="dt">y=</span>predicted, <span class="dt">x=</span>aq, <span class="dt">group=</span>imitative)) <span class="op">+</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a></span>
+<span id="cb19-13"><a href="#cb19-13"></a><span class="st">  </span><span class="co"># predicted fixed effect of mood</span></span>
+<span id="cb19-14"><a href="#cb19-14"></a><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>conf.low, <span class="dt">ymax=</span>conf.high, <span class="dt">fill=</span>imitative), <span class="dt">alpha=</span>.<span class="dv">15</span>, <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></span>
+<span id="cb19-15"><a href="#cb19-15"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype=</span>imitative, <span class="dt">color=</span>imitative), <span class="dt">size=</span>line_width<span class="fl">-0.25</span>) <span class="op">+</span></span>
+<span id="cb19-16"><a href="#cb19-16"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>gaze, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">gaze=</span>gaze_labels)) <span class="op">+</span></span>
+<span id="cb19-17"><a href="#cb19-17"></a></span>
+<span id="cb19-18"><a href="#cb19-18"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb19-19"><a href="#cb19-19"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb19-20"><a href="#cb19-20"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>color_imitative, <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb19-21"><a href="#cb19-21"></a><span class="st">  </span><span class="kw">scale_linetype_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;solid&#39;</span>, <span class="st">&#39;solid&#39;</span>), <span class="dt">name=</span><span class="st">&#39;Imitative</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb19-22"><a href="#cb19-22"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;AQ&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb19-23"><a href="#cb19-23"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb19-24"><a href="#cb19-24"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor=</span><span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&#39;grey70&#39;</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">linetype=</span><span class="st">&#39;solid&#39;</span>))</span>
+<span id="cb19-25"><a href="#cb19-25"></a>fig.rt.interact</span></code></pre></div>
 <p><img src="web_03_confirmatory_glmm_files/figure-html/RT_Interaction_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># compute the conditional effects of imitative*aq for each level of gaze</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>m.rt.interaction &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>gaze<span class="op">/</span>imitative<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>gaze<span class="op">/</span>spatial<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
-<span id="cb21-3"><a href="#cb21-3"></a>            <span class="dt">data=</span>d.trial.rt, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>))</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="kw">summary</span>(m.rt.interaction, <span class="dt">corr=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># compute the conditional effects of imitative*aq for each level of gaze</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>m.rt.interaction &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>gaze<span class="op">/</span>imitative<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
+<span id="cb20-3"><a href="#cb20-3"></a>            <span class="dt">data=</span>d.trial.rt, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</span>
+<span id="cb20-4"><a href="#cb20-4"></a>            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;Nelder_Mead&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="kw">summary</span>(m.rt.interaction, <span class="dt">corr=</span>F)</span></code></pre></div>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: inverse.gaussian  ( identity )
-## Formula: rt ~ gaze/imitative * aq_cen + gaze/spatial * aq_cen + (1 | id) +  
-##     (1 | stimulus)
+## Formula: rt ~ gaze/imitative * aq_cen + (1 | id) + (1 | stimulus)
 ##    Data: d.trial.rt
+## Control: 
+## glmerControl(optimizer = &quot;Nelder_Mead&quot;, optCtrl = list(maxfun = 2e+05))
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-## 163758.9 163872.2 -81864.5 163728.9    14032 
+## 164021.3 164104.4 -81999.7 163999.3    14036 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -3.3445 -0.6821 -0.0932  0.5782  5.3685 
+## -3.3584 -0.6897 -0.0795  0.5855  4.9957 
 ## 
 ## Random effects:
-##  Groups   Name        Variance  Std.Dev. 
-##  stimulus (Intercept) 3.176e+01  5.636000
-##  id       (Intercept) 6.567e+02 25.627100
-##  Residual             6.057e-05  0.007783
+##  Groups   Name        Variance  Std.Dev.
+##  stimulus (Intercept) 3.229e+01  5.68276
+##  id       (Intercept) 6.449e+02 25.39530
+##  Residual             6.115e-05  0.00782
 ## Number of obs: 14047, groups:  stimulus, 64; id, 60
 ## 
 ## Fixed effects:
 ##                                Estimate Std. Error t value Pr(&gt;|z|)    
-## (Intercept)                   529.03756   14.40447  36.727  &lt; 2e-16 ***
-## gaze1                          -4.62459    1.35017  -3.425 0.000614 ***
-## aq_cen                          0.29151    2.83962   0.103 0.918234    
-## gazedirect:imitative1         -11.49180    1.88735  -6.089 1.14e-09 ***
-## gazeaverted:imitative1         -8.98016    1.92507  -4.665 3.09e-06 ***
-## gaze1:aq_cen                   -0.07820    0.25131  -0.311 0.755680    
-## gazedirect:spatial1           -19.75836    1.88705 -10.470  &lt; 2e-16 ***
-## gazeaverted:spatial1          -24.86088    1.91338 -12.993  &lt; 2e-16 ***
-## gazedirect:imitative1:aq_cen    0.20030    0.34912   0.574 0.566148    
-## gazeaverted:imitative1:aq_cen  -1.09468    0.35833  -3.055 0.002251 ** 
-## gazedirect:aq_cen:spatial1      0.07044    0.35037   0.201 0.840653    
-## gazeaverted:aq_cen:spatial1     0.22812    0.35976   0.634 0.526009    
+## (Intercept)                   528.38997    8.33559  63.390  &lt; 2e-16 ***
+## gaze1                          -4.67046    1.36420  -3.424 0.000618 ***
+## aq_cen                          0.28224    2.73523   0.103 0.917815    
+## gazedirect:imitative1          11.58000    1.88435   6.145 7.98e-10 ***
+## gazeaverted:imitative1          9.07689    1.94394   4.669 3.02e-06 ***
+## gaze1:aq_cen                   -0.05738    0.25287  -0.227 0.820480    
+## gazedirect:imitative1:aq_cen   -0.27456    0.35265  -0.779 0.436225    
+## gazeaverted:imitative1:aq_cen   1.07746    0.36248   2.972 0.002954 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## convergence code: 0
-## unable to evaluate scaled gradient
-## Model failed to converge: degenerate  Hessian with 1 negative eigenvalues</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># &gt;&gt; simple slopes</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>m.rt.interaction.slopes &lt;-<span class="st"> </span>interactions<span class="op">::</span><span class="kw">sim_slopes</span>(m.rt.interaction, <span class="dt">pred=</span>aq_cen, <span class="dt">modx=</span>imitative, <span class="dt">mod2=</span>gaze)</span>
-<span id="cb23-3"><a href="#cb23-3"></a>huxtable<span class="op">::</span><span class="kw">as_huxtable</span>(m.rt.interaction.slopes, <span class="dt">digits=</span><span class="dv">2</span>)</span></code></pre></div>
+## Model failed to converge with max|grad| = 0.0025866 (tol = 0.002, component 1)</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># &gt;&gt; simple slopes</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>m.rt.interaction.slopes &lt;-<span class="st"> </span>interactions<span class="op">::</span><span class="kw">sim_slopes</span>(m.rt.interaction, <span class="dt">pred=</span>aq_cen, <span class="dt">modx=</span>imitative, <span class="dt">mod2=</span>gaze)</span>
+<span id="cb22-3"><a href="#cb22-3"></a>huxtable<span class="op">::</span><span class="kw">as_huxtable</span>(m.rt.interaction.slopes)</span></code></pre></div>
 <table class="huxtable" style="border-collapse: collapse; margin-bottom: 2em; margin-top: 2em; width: 50%; margin-left: auto; margin-right: auto;  ">
 <col><col><tr>
 <td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = direct</td>
@@ -1014,11 +971,11 @@ averted
 </tr>
 <tr>
 <td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
-<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.351671963015957 (3.18997009520299)</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.391300151407427 (0.662926143929173)</td>
 </tr>
 <tr>
 <td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
-<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.147776952625013 (2.81965705281639)</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.116454059500687 (2.79699145518187)</td>
 </tr>
 <tr>
 <td colspan="2" style="vertical-align: top; text-align: left; white-space: nowrap; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt; padding: 4pt 4pt 4pt 4pt; font-style: italic;">gaze = averted</td>
@@ -1029,11 +986,11 @@ averted
 </tr>
 <tr>
 <td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">compt</td>
-<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.21413106992901 (2.86458212655764)</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">-0.227352913227075 (2.64727338447338)</td>
 </tr>
 <tr>
 <td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">incompt</td>
-<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.88175059066947 (2.85580129692823)</td>
+<td style="vertical-align: top; text-align: left; white-space: nowrap; padding: 4pt 4pt 4pt 4pt;">0.850127687609205 (2.72644063639414)</td>
 </tr>
 </table>
 
@@ -1044,82 +1001,82 @@ averted
 <h1>Error rates</h1>
 <div id="descriptive-statistics-1" class="section level2">
 <h2>Descriptive statistics</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Bar plot ER: Gaze*Imitative</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>descr.er.gi &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb24-5"><a href="#cb24-5"></a></span>
-<span id="cb24-6"><a href="#cb24-6"></a><span class="co"># figure</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a>fig.bp.er.gi &lt;-<span class="st"> </span><span class="kw">ggplot</span>(descr.er.gi, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>imitative)) <span class="op">+</span></span>
-<span id="cb24-8"><a href="#cb24-8"></a></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb24-10"><a href="#cb24-10"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="op">+</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="dv">-1</span>) <span class="op">+</span></span>
-<span id="cb24-12"><a href="#cb24-12"></a><span class="st">  </span></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb24-14"><a href="#cb24-14"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.07</span>)) <span class="op">+</span></span>
-<span id="cb24-15"><a href="#cb24-15"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name=</span><span class="st">&#39;Imitative compatibility:&#39;</span>, <span class="dt">values=</span>color_imitative, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb24-16"><a href="#cb24-16"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name=</span><span class="st">&#39;Gaze&#39;</span>, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;Imitative compatibility&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb24-19"><a href="#cb24-19"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb24-20"><a href="#cb24-20"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb24-21"><a href="#cb24-21"></a>    <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</span>
-<span id="cb24-22"><a href="#cb24-22"></a>    <span class="dt">legend.title=</span><span class="kw">element_blank</span>(), </span>
-<span id="cb24-23"><a href="#cb24-23"></a>    <span class="dt">legend.margin=</span><span class="kw">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
-<span id="cb24-24"><a href="#cb24-24"></a>    <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="st">&#39;center&#39;</span>, <span class="st">&#39;top&#39;</span>),</span>
-<span id="cb24-25"><a href="#cb24-25"></a>    <span class="dt">legend.key.size=</span><span class="kw">unit</span>(<span class="dv">1</span>,<span class="st">&#39;line&#39;</span>),            </span>
-<span id="cb24-26"><a href="#cb24-26"></a>    <span class="dt">legend.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span>font_size<span class="dv">-2</span>),</span>
-<span id="cb24-27"><a href="#cb24-27"></a>    )  </span>
-<span id="cb24-28"><a href="#cb24-28"></a></span>
-<span id="cb24-29"><a href="#cb24-29"></a></span>
-<span id="cb24-30"><a href="#cb24-30"></a><span class="co"># Bar plot ER: Gaze*Spatial</span></span>
-<span id="cb24-31"><a href="#cb24-31"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb24-32"><a href="#cb24-32"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb24-33"><a href="#cb24-33"></a>descr.er.gs &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb24-34"><a href="#cb24-34"></a></span>
-<span id="cb24-35"><a href="#cb24-35"></a><span class="co"># figure</span></span>
-<span id="cb24-36"><a href="#cb24-36"></a>fig.bp.er.gs &lt;-<span class="st"> </span><span class="kw">ggplot</span>(descr.er.gs, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>spatial)) <span class="op">+</span></span>
-<span id="cb24-37"><a href="#cb24-37"></a></span>
-<span id="cb24-38"><a href="#cb24-38"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb24-39"><a href="#cb24-39"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="op">+</span></span>
-<span id="cb24-40"><a href="#cb24-40"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="dv">-1</span>) <span class="op">+</span></span>
-<span id="cb24-41"><a href="#cb24-41"></a><span class="st">  </span></span>
-<span id="cb24-42"><a href="#cb24-42"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb24-43"><a href="#cb24-43"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.07</span>)) <span class="op">+</span></span>
-<span id="cb24-44"><a href="#cb24-44"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name=</span><span class="st">&#39;Spatial compatibility:&#39;</span>, <span class="dt">values=</span>color_spatial, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb24-45"><a href="#cb24-45"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name=</span><span class="st">&#39;Gaze&#39;</span>, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></span>
-<span id="cb24-46"><a href="#cb24-46"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;Spatial compatibility&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
-<span id="cb24-47"><a href="#cb24-47"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb24-48"><a href="#cb24-48"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb24-49"><a href="#cb24-49"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb24-50"><a href="#cb24-50"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb24-51"><a href="#cb24-51"></a>    <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</span>
-<span id="cb24-52"><a href="#cb24-52"></a>    <span class="dt">legend.title=</span><span class="kw">element_blank</span>(), </span>
-<span id="cb24-53"><a href="#cb24-53"></a>    <span class="dt">legend.margin=</span><span class="kw">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
-<span id="cb24-54"><a href="#cb24-54"></a>    <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="st">&#39;center&#39;</span>, <span class="st">&#39;top&#39;</span>),</span>
-<span id="cb24-55"><a href="#cb24-55"></a>    <span class="dt">legend.key.size=</span><span class="kw">unit</span>(<span class="dv">1</span>,<span class="st">&#39;line&#39;</span>),            </span>
-<span id="cb24-56"><a href="#cb24-56"></a>    <span class="dt">legend.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span>font_size<span class="dv">-2</span>),</span>
-<span id="cb24-57"><a href="#cb24-57"></a>    )  </span>
-<span id="cb24-58"><a href="#cb24-58"></a></span>
-<span id="cb24-59"><a href="#cb24-59"></a>fig.bp.er.gi <span class="op">+</span><span class="st"> </span>fig.bp.er.gs </span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Bar plot ER: Gaze*Imitative</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>descr.er.gi &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb23-5"><a href="#cb23-5"></a></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="co"># figure</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>fig.bp.er.gi &lt;-<span class="st"> </span><span class="kw">ggplot</span>(descr.er.gi, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>imitative)) <span class="op">+</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a></span>
+<span id="cb23-9"><a href="#cb23-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="op">+</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="dv">-1</span>) <span class="op">+</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a><span class="st">  </span></span>
+<span id="cb23-13"><a href="#cb23-13"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb23-14"><a href="#cb23-14"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.07</span>)) <span class="op">+</span></span>
+<span id="cb23-15"><a href="#cb23-15"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name=</span><span class="st">&#39;Imitative compatibility:&#39;</span>, <span class="dt">values=</span>color_imitative, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb23-16"><a href="#cb23-16"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name=</span><span class="st">&#39;Gaze&#39;</span>, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></span>
+<span id="cb23-17"><a href="#cb23-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;Imitative compatibility&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
+<span id="cb23-18"><a href="#cb23-18"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb23-19"><a href="#cb23-19"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb23-20"><a href="#cb23-20"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb23-21"><a href="#cb23-21"></a>    <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</span>
+<span id="cb23-22"><a href="#cb23-22"></a>    <span class="dt">legend.title=</span><span class="kw">element_blank</span>(), </span>
+<span id="cb23-23"><a href="#cb23-23"></a>    <span class="dt">legend.margin=</span><span class="kw">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb23-24"><a href="#cb23-24"></a>    <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="st">&#39;center&#39;</span>, <span class="st">&#39;top&#39;</span>),</span>
+<span id="cb23-25"><a href="#cb23-25"></a>    <span class="dt">legend.key.size=</span><span class="kw">unit</span>(<span class="dv">1</span>,<span class="st">&#39;line&#39;</span>),            </span>
+<span id="cb23-26"><a href="#cb23-26"></a>    <span class="dt">legend.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span>font_size<span class="dv">-2</span>),</span>
+<span id="cb23-27"><a href="#cb23-27"></a>    )  </span>
+<span id="cb23-28"><a href="#cb23-28"></a></span>
+<span id="cb23-29"><a href="#cb23-29"></a></span>
+<span id="cb23-30"><a href="#cb23-30"></a><span class="co"># Bar plot ER: Gaze*Spatial</span></span>
+<span id="cb23-31"><a href="#cb23-31"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb23-32"><a href="#cb23-32"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb23-33"><a href="#cb23-33"></a>descr.er.gs &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb23-34"><a href="#cb23-34"></a></span>
+<span id="cb23-35"><a href="#cb23-35"></a><span class="co"># figure</span></span>
+<span id="cb23-36"><a href="#cb23-36"></a>fig.bp.er.gs &lt;-<span class="st"> </span><span class="kw">ggplot</span>(descr.er.gs, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>spatial)) <span class="op">+</span></span>
+<span id="cb23-37"><a href="#cb23-37"></a></span>
+<span id="cb23-38"><a href="#cb23-38"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb23-39"><a href="#cb23-39"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="op">+</span></span>
+<span id="cb23-40"><a href="#cb23-40"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="dv">-1</span>) <span class="op">+</span></span>
+<span id="cb23-41"><a href="#cb23-41"></a><span class="st">  </span></span>
+<span id="cb23-42"><a href="#cb23-42"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb23-43"><a href="#cb23-43"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.07</span>)) <span class="op">+</span></span>
+<span id="cb23-44"><a href="#cb23-44"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name=</span><span class="st">&#39;Spatial compatibility:&#39;</span>, <span class="dt">values=</span>color_spatial, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb23-45"><a href="#cb23-45"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name=</span><span class="st">&#39;Gaze&#39;</span>, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></span>
+<span id="cb23-46"><a href="#cb23-46"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;Spatial compatibility&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
+<span id="cb23-47"><a href="#cb23-47"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb23-48"><a href="#cb23-48"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb23-49"><a href="#cb23-49"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb23-50"><a href="#cb23-50"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb23-51"><a href="#cb23-51"></a>    <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</span>
+<span id="cb23-52"><a href="#cb23-52"></a>    <span class="dt">legend.title=</span><span class="kw">element_blank</span>(), </span>
+<span id="cb23-53"><a href="#cb23-53"></a>    <span class="dt">legend.margin=</span><span class="kw">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb23-54"><a href="#cb23-54"></a>    <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="st">&#39;center&#39;</span>, <span class="st">&#39;top&#39;</span>),</span>
+<span id="cb23-55"><a href="#cb23-55"></a>    <span class="dt">legend.key.size=</span><span class="kw">unit</span>(<span class="dv">1</span>,<span class="st">&#39;line&#39;</span>),            </span>
+<span id="cb23-56"><a href="#cb23-56"></a>    <span class="dt">legend.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span>font_size<span class="dv">-2</span>),</span>
+<span id="cb23-57"><a href="#cb23-57"></a>    )  </span>
+<span id="cb23-58"><a href="#cb23-58"></a></span>
+<span id="cb23-59"><a href="#cb23-59"></a>fig.bp.er.gi <span class="op">+</span><span class="st"> </span>fig.bp.er.gs </span></code></pre></div>
 <p><img src="web_03_confirmatory_glmm_files/figure-html/ER_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># compute descriptive stats for gaze*imitative (ER)</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>descr.er.gi &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb25-3"><a href="#cb25-3"></a><span class="kw">colnames</span>(descr.er.gi)[<span class="dv">2</span>] &lt;-<span class="st"> &#39;compt&#39;</span></span>
-<span id="cb25-4"><a href="#cb25-4"></a></span>
-<span id="cb25-5"><a href="#cb25-5"></a><span class="co"># compute descriptive stats for gaze*spatial (ER)</span></span>
-<span id="cb25-6"><a href="#cb25-6"></a>descr.er.gs &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb25-7"><a href="#cb25-7"></a><span class="kw">colnames</span>(descr.er.gs)[<span class="dv">2</span>] &lt;-<span class="st"> &#39;compt&#39;</span></span>
-<span id="cb25-8"><a href="#cb25-8"></a></span>
-<span id="cb25-9"><a href="#cb25-9"></a><span class="co"># merge summary tables</span></span>
-<span id="cb25-10"><a href="#cb25-10"></a>descr.er &lt;-<span class="st"> </span><span class="kw">merge</span>(descr.er.gi[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)], descr.er.gs[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)], <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;compt&#39;</span>))</span>
-<span id="cb25-11"><a href="#cb25-11"></a><span class="kw">colnames</span>(descr.er) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;Compt.&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>)</span>
-<span id="cb25-12"><a href="#cb25-12"></a></span>
-<span id="cb25-13"><a href="#cb25-13"></a><span class="co"># display table</span></span>
-<span id="cb25-14"><a href="#cb25-14"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.er, <span class="dt">digits=</span><span class="dv">3</span>, <span class="dt">caption=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb25-15"><a href="#cb25-15"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb25-16"><a href="#cb25-16"></a><span class="st">  </span><span class="kw">add_header_above</span>(<span class="kw">c</span>(<span class="st">&#39; &#39;</span>=<span class="dv">2</span>, <span class="st">&#39;Imitative&#39;</span>=<span class="dv">3</span>, <span class="st">&#39;Spatial&#39;</span>=<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># compute descriptive stats for gaze*imitative (ER)</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>descr.er.gi &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="kw">colnames</span>(descr.er.gi)[<span class="dv">2</span>] &lt;-<span class="st"> &#39;compt&#39;</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="co"># compute descriptive stats for gaze*spatial (ER)</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>descr.er.gs &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="kw">colnames</span>(descr.er.gs)[<span class="dv">2</span>] &lt;-<span class="st"> &#39;compt&#39;</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a></span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="co"># merge summary tables</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a>descr.er &lt;-<span class="st"> </span><span class="kw">merge</span>(descr.er.gi[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)], descr.er.gs[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)], <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;compt&#39;</span>))</span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="kw">colnames</span>(descr.er) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;Compt.&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>)</span>
+<span id="cb24-12"><a href="#cb24-12"></a></span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="co"># display table</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.er, <span class="dt">digits=</span><span class="dv">3</span>, <span class="dt">caption=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb24-15"><a href="#cb24-15"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a><span class="st">  </span><span class="kw">add_header_above</span>(<span class="kw">c</span>(<span class="st">&#39; &#39;</span>=<span class="dv">2</span>, <span class="st">&#39;Imitative&#39;</span>=<span class="dv">3</span>, <span class="st">&#39;Spatial&#39;</span>=<span class="dv">3</span>))</span></code></pre></div>
 <table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Error rates
@@ -1277,10 +1234,10 @@ incompt
 <div id="glmm-1" class="section level2">
 <h2>GLMM</h2>
 <p>The GLMM on ER data revealed significant main effects of <code>Imitative</code> and <code>Spatial</code>, which confirm the occurrence of compatibility effects: participants made fewer errors in imitatively (spatially) compatible trials than in imitatively (spatially) incompatible trials. None of the remaining main effects or interactions were statistically significant.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># fit model</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>m.er &lt;-<span class="st"> </span><span class="kw">glmer</span>(error <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
-<span id="cb26-3"><a href="#cb26-3"></a>                <span class="dt">data=</span>d.trial.er, <span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>))</span>
-<span id="cb26-4"><a href="#cb26-4"></a><span class="kw">summary</span>(m.er, <span class="dt">corr=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># fit model</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>m.er &lt;-<span class="st"> </span><span class="kw">glmer</span>(error <span class="op">~</span><span class="st"> </span>imitative<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>spatial<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
+<span id="cb25-3"><a href="#cb25-3"></a>                <span class="dt">data=</span>d.trial.er, <span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>))</span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="kw">summary</span>(m.er, <span class="dt">corr=</span>F)</span></code></pre></div>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: binomial  ( logit )
@@ -1293,88 +1250,90 @@ incompt
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -0.6914 -0.2225 -0.1671 -0.1143 15.4984 
+## -0.6914 -0.2225 -0.1671 -0.1143 15.4980 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev.
 ##  stimulus (Intercept) 0.02748  0.1658  
-##  id       (Intercept) 1.00061  1.0003  
+##  id       (Intercept) 1.00058  1.0003  
 ## Number of obs: 15353, groups:  stimulus, 64; id, 60
 ## 
 ## Fixed effects:
 ##                          Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)             -3.580526   0.144259 -24.820  &lt; 2e-16 ***
-## imitative1              -0.456819   0.081684  -5.593 2.24e-08 ***
-## gaze1                   -0.012991   0.083659  -0.155    0.877    
-## aq_cen                  -0.028699   0.026229  -1.094    0.274    
-## spatial1                -0.529881   0.082064  -6.457 1.07e-10 ***
-## imitative1:gaze1         0.063382   0.163217   0.388    0.698    
-## imitative1:aq_cen       -0.027463   0.015318  -1.793    0.073 .  
-## gaze1:aq_cen             0.010799   0.015666   0.689    0.491    
-## gaze1:spatial1          -0.110015   0.164032  -0.671    0.502    
-## aq_cen:spatial1         -0.007700   0.015290  -0.504    0.615    
-## imitative1:gaze1:aq_cen  0.001808   0.030527   0.059    0.953    
-## gaze1:aq_cen:spatial1    0.032091   0.030580   1.049    0.294    
+## (Intercept)             -3.580538   0.144246 -24.822  &lt; 2e-16 ***
+## imitative1               0.456818   0.081684   5.593 2.24e-08 ***
+## gaze1                   -0.012966   0.083658  -0.155    0.877    
+## aq_cen                  -0.028695   0.026229  -1.094    0.274    
+## spatial1                 0.529869   0.082064   6.457 1.07e-10 ***
+## imitative1:gaze1        -0.063369   0.163218  -0.388    0.698    
+## imitative1:aq_cen        0.027463   0.015318   1.793    0.073 .  
+## gaze1:aq_cen             0.010802   0.015666   0.690    0.490    
+## gaze1:spatial1           0.109985   0.164041   0.670    0.503    
+## aq_cen:spatial1          0.007704   0.015290   0.504    0.614    
+## imitative1:gaze1:aq_cen -0.001812   0.030527  -0.059    0.953    
+## gaze1:aq_cen:spatial1   -0.032095   0.030580  -1.050    0.294    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># IMITATIVE COMPATIBILITY</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a>desc.er.ic &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb28-5"><a href="#cb28-5"></a></span>
-<span id="cb28-6"><a href="#cb28-6"></a><span class="co"># figure</span></span>
-<span id="cb28-7"><a href="#cb28-7"></a>fig.er.ic &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.er.ic, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>imitative, <span class="dt">color=</span>imitative)) <span class="op">+</span></span>
-<span id="cb28-8"><a href="#cb28-8"></a></span>
-<span id="cb28-9"><a href="#cb28-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb28-11"><a href="#cb28-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb28-12"><a href="#cb28-12"></a></span>
-<span id="cb28-13"><a href="#cb28-13"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb28-14"><a href="#cb28-14"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative) <span class="op">+</span></span>
-<span id="cb28-15"><a href="#cb28-15"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb28-16"><a href="#cb28-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Imitative compatibility&#39;</span>) <span class="op">+</span></span>
-<span id="cb28-17"><a href="#cb28-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
-<span id="cb28-18"><a href="#cb28-18"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.08</span>) <span class="op">+</span></span>
-<span id="cb28-19"><a href="#cb28-19"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb28-20"><a href="#cb28-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb28-21"><a href="#cb28-21"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), </span>
-<span id="cb28-22"><a href="#cb28-22"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb28-23"><a href="#cb28-23"></a>    )</span>
-<span id="cb28-24"><a href="#cb28-24"></a></span>
-<span id="cb28-25"><a href="#cb28-25"></a><span class="co"># SPATIAL COMPATIBILITY</span></span>
-<span id="cb28-26"><a href="#cb28-26"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb28-27"><a href="#cb28-27"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb28-28"><a href="#cb28-28"></a>desc.er.sc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb28-29"><a href="#cb28-29"></a></span>
-<span id="cb28-30"><a href="#cb28-30"></a><span class="co"># figure</span></span>
-<span id="cb28-31"><a href="#cb28-31"></a>fig.er.sc &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.er.sc, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>spatial, <span class="dt">color=</span>spatial)) <span class="op">+</span></span>
-<span id="cb28-32"><a href="#cb28-32"></a></span>
-<span id="cb28-33"><a href="#cb28-33"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb28-34"><a href="#cb28-34"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb28-35"><a href="#cb28-35"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb28-36"><a href="#cb28-36"></a></span>
-<span id="cb28-37"><a href="#cb28-37"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb28-38"><a href="#cb28-38"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_spatial) <span class="op">+</span></span>
-<span id="cb28-39"><a href="#cb28-39"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb28-40"><a href="#cb28-40"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Spatial compatibility&#39;</span>) <span class="op">+</span></span>
-<span id="cb28-41"><a href="#cb28-41"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
-<span id="cb28-42"><a href="#cb28-42"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.08</span>) <span class="op">+</span></span>
-<span id="cb28-43"><a href="#cb28-43"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb28-44"><a href="#cb28-44"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb28-45"><a href="#cb28-45"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb28-46"><a href="#cb28-46"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb28-47"><a href="#cb28-47"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb28-48"><a href="#cb28-48"></a>    )</span>
-<span id="cb28-49"><a href="#cb28-49"></a></span>
-<span id="cb28-50"><a href="#cb28-50"></a><span class="co"># combine figures</span></span>
-<span id="cb28-51"><a href="#cb28-51"></a><span class="co"># ~~~~~~~~~~~~~~~~</span></span>
-<span id="cb28-52"><a href="#cb28-52"></a>fig.er.ic <span class="op">+</span><span class="st"> </span>fig.er.sc</span></code></pre></div>
+<div id="main-effects-1" class="section level3">
+<h3>Main effects</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># IMITATIVE COMPATIBILITY</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>desc.er.ic &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;imitative&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="co"># figure</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>fig.er.ic &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.er.ic, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>imitative, <span class="dt">color=</span>imitative)) <span class="op">+</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb27-11"><a href="#cb27-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb27-12"><a href="#cb27-12"></a></span>
+<span id="cb27-13"><a href="#cb27-13"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb27-14"><a href="#cb27-14"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_imitative) <span class="op">+</span></span>
+<span id="cb27-15"><a href="#cb27-15"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb27-16"><a href="#cb27-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Imitative compatibility&#39;</span>) <span class="op">+</span></span>
+<span id="cb27-17"><a href="#cb27-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
+<span id="cb27-18"><a href="#cb27-18"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.08</span>) <span class="op">+</span></span>
+<span id="cb27-19"><a href="#cb27-19"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb27-20"><a href="#cb27-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb27-21"><a href="#cb27-21"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), </span>
+<span id="cb27-22"><a href="#cb27-22"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb27-23"><a href="#cb27-23"></a>    )</span>
+<span id="cb27-24"><a href="#cb27-24"></a></span>
+<span id="cb27-25"><a href="#cb27-25"></a><span class="co"># SPATIAL COMPATIBILITY</span></span>
+<span id="cb27-26"><a href="#cb27-26"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-27"><a href="#cb27-27"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb27-28"><a href="#cb27-28"></a>desc.er.sc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.er, <span class="dt">measurevar=</span><span class="st">&#39;error&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;spatial&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb27-29"><a href="#cb27-29"></a></span>
+<span id="cb27-30"><a href="#cb27-30"></a><span class="co"># figure</span></span>
+<span id="cb27-31"><a href="#cb27-31"></a>fig.er.sc &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.er.sc, <span class="kw">aes</span>(<span class="dt">y=</span>error, <span class="dt">x=</span>spatial, <span class="dt">color=</span>spatial)) <span class="op">+</span></span>
+<span id="cb27-32"><a href="#cb27-32"></a></span>
+<span id="cb27-33"><a href="#cb27-33"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb27-34"><a href="#cb27-34"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb27-35"><a href="#cb27-35"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>error<span class="op">-</span>ci, <span class="dt">ymax=</span>error<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb27-36"><a href="#cb27-36"></a></span>
+<span id="cb27-37"><a href="#cb27-37"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb27-38"><a href="#cb27-38"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_spatial) <span class="op">+</span></span>
+<span id="cb27-39"><a href="#cb27-39"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb27-40"><a href="#cb27-40"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Spatial compatibility&#39;</span>) <span class="op">+</span></span>
+<span id="cb27-41"><a href="#cb27-41"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Error rates&#39;</span>) <span class="op">+</span></span>
+<span id="cb27-42"><a href="#cb27-42"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.08</span>) <span class="op">+</span></span>
+<span id="cb27-43"><a href="#cb27-43"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb27-44"><a href="#cb27-44"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb27-45"><a href="#cb27-45"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb27-46"><a href="#cb27-46"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb27-47"><a href="#cb27-47"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb27-48"><a href="#cb27-48"></a>    )</span>
+<span id="cb27-49"><a href="#cb27-49"></a></span>
+<span id="cb27-50"><a href="#cb27-50"></a><span class="co"># combine figures</span></span>
+<span id="cb27-51"><a href="#cb27-51"></a><span class="co"># ~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-52"><a href="#cb27-52"></a>fig.er.ic <span class="op">+</span><span class="st"> </span>fig.er.sc</span></code></pre></div>
 <p><img src="web_03_confirmatory_glmm_files/figure-html/ER_MainEffects_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>descr.er.maineffects &lt;-<span class="st"> </span><span class="kw">cbind</span>(desc.er.ic[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.er.sc[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)])</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">colnames</span>(descr.er.maineffects) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Imitative&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Spatial&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
-<span id="cb29-3"><a href="#cb29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.er.maineffects, <span class="dt">digits=</span><span class="dv">3</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics for main effects (ER)&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>descr.er.maineffects &lt;-<span class="st"> </span><span class="kw">cbind</span>(desc.er.ic[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.er.sc[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)])</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">colnames</span>(descr.er.maineffects) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Imitative&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Spatial&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.er.maineffects, <span class="dt">digits=</span><span class="dv">3</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics for main effects (ER)&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
 <table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for main effects (ER)
@@ -1488,69 +1447,70 @@ incompt
 </table>
 </div>
 </div>
+</div>
 <div id="general-compatibility" class="section level1">
 <h1>General compatibility</h1>
 <p>To make our results comparable to previous automatic imitation studies in which imitative and spatial compatibility were confounded, we ran an additional GLMM on RT data of the subset of trials in which spatial and imitative compatibility overlapped (i.e. left-hand trials). The to test the effects on general compatibility, GLMM included the following fixed and random effects:</p>
-<p>Condensed form: <code>RT ~ GeneralCompt*Gaze*AQ + (1|ID) + (1|Stimulus)</code></p>
-<p>Extended form: <code>RT ~ GeneralCompt + Gaze + AQ + GeneralCompt:Gaze + GeneralCompt:AQ +</code> <code>Gaze:AQ + GeneralCompt:Gaze:AQ + (1|ID) + (1|Stimulus)</code></p>
+<p><em>Condensed form</em>:<br> <code>RT ~ GeneralCompt*Gaze*AQ + (1|ID) + (1|Stimulus)</code></p>
+<p><em>Extended form</em>:<br> <code>RT ~ GeneralCompt + Gaze + AQ + Gaze:GeneralCompt + AQ:GeneralCompt +</code> <code>AQ:Gaze + AQ:Gaze:GeneralCompt + (1|ID) + (1|Stimulus)</code></p>
 <p>Effect coding contrasts were set for categorical predictors, and AQ was mean-centered.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># PREPARE DATASET FOR GENERAL COMPATIBILITY (left-hand trials)</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="co"># create data set for glmm for RT (exclude missing, incorrect, outliers) and for ER (exclude missing)</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a>d.trial.rt.gc &lt;-<span class="st"> </span>d.task[<span class="op">!</span>d.task<span class="op">$</span>excl_rt <span class="op">&amp;</span><span class="st"> </span>d.task<span class="op">$</span>hand<span class="op">==</span><span class="st">&#39;left&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;trial&#39;</span>, <span class="st">&#39;stimulus&#39;</span>, <span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;rt&#39;</span>)]</span>
-<span id="cb30-5"><a href="#cb30-5"></a></span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="co"># merge with questionnaire data</span></span>
-<span id="cb30-7"><a href="#cb30-7"></a>d.trial.rt.gc &lt;-<span class="st"> </span><span class="kw">merge</span>(d.quest[,<span class="kw">c</span>(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;aq&#39;</span>)], d.trial.rt.gc, <span class="dt">by=</span><span class="st">&#39;id&#39;</span>)</span>
-<span id="cb30-8"><a href="#cb30-8"></a></span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="co"># change name of compatibility</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a><span class="kw">names</span>(d.trial.rt.gc)[<span class="kw">names</span>(d.trial.rt.gc)<span class="op">==</span><span class="st">&#39;imitative&#39;</span>] &lt;-<span class="st"> &#39;general_compt&#39;</span></span>
-<span id="cb30-11"><a href="#cb30-11"></a>d.trial.rt.gc[<span class="kw">names</span>(d.trial.rt.gc)<span class="op">==</span><span class="st">&#39;spatial&#39;</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb30-12"><a href="#cb30-12"></a></span>
-<span id="cb30-13"><a href="#cb30-13"></a><span class="co"># define factors</span></span>
-<span id="cb30-14"><a href="#cb30-14"></a>d.trial.rt.gc<span class="op">$</span>id        &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>id)</span>
-<span id="cb30-15"><a href="#cb30-15"></a>d.trial.rt.gc<span class="op">$</span>stimulus  &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>stimulus)</span>
-<span id="cb30-16"><a href="#cb30-16"></a>d.trial.rt.gc<span class="op">$</span>gaze      &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>gaze, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;direct&#39;</span>, <span class="st">&#39;averted&#39;</span>))</span>
-<span id="cb30-17"><a href="#cb30-17"></a>d.trial.rt.gc<span class="op">$</span>general_compt &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>general_compt, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;compt&#39;</span>, <span class="st">&#39;incompt&#39;</span>))</span>
-<span id="cb30-18"><a href="#cb30-18"></a></span>
-<span id="cb30-19"><a href="#cb30-19"></a><span class="co"># set effect coding contrasts</span></span>
-<span id="cb30-20"><a href="#cb30-20"></a><span class="kw">contrasts</span>(d.trial.rt.gc<span class="op">$</span>gaze) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [direct - averted]</span></span>
-<span id="cb30-21"><a href="#cb30-21"></a><span class="kw">contrasts</span>(d.trial.rt.gc<span class="op">$</span>general_compt) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [compt - incompt]</span></span>
-<span id="cb30-22"><a href="#cb30-22"></a></span>
-<span id="cb30-23"><a href="#cb30-23"></a><span class="co"># center continuous predictors</span></span>
-<span id="cb30-24"><a href="#cb30-24"></a>d.trial.rt.gc<span class="op">$</span>aq_cen &lt;-<span class="st"> </span><span class="kw">scale</span>(d.trial.rt.gc<span class="op">$</span>aq, <span class="dt">center=</span>T, <span class="dt">scale=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># PREPARE DATASET FOR GENERAL COMPATIBILITY (left-hand trials)</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="co"># create data set for glmm for RT (exclude missing, incorrect, outliers) and for ER (exclude missing)</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>d.trial.rt.gc &lt;-<span class="st"> </span>d.task[<span class="op">!</span>d.task<span class="op">$</span>excl_rt <span class="op">&amp;</span><span class="st"> </span>d.task<span class="op">$</span>hand<span class="op">==</span><span class="st">&#39;left&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;trial&#39;</span>, <span class="st">&#39;stimulus&#39;</span>, <span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;imitative&#39;</span>, <span class="st">&#39;rt&#39;</span>)]</span>
+<span id="cb29-5"><a href="#cb29-5"></a></span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="co"># merge with questionnaire data</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>d.trial.rt.gc &lt;-<span class="st"> </span><span class="kw">merge</span>(d.quest[,<span class="kw">c</span>(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;aq&#39;</span>)], d.trial.rt.gc, <span class="dt">by=</span><span class="st">&#39;id&#39;</span>)</span>
+<span id="cb29-8"><a href="#cb29-8"></a></span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="co"># change name of compatibility</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a><span class="kw">names</span>(d.trial.rt.gc)[<span class="kw">names</span>(d.trial.rt.gc)<span class="op">==</span><span class="st">&#39;imitative&#39;</span>] &lt;-<span class="st"> &#39;general_compt&#39;</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a>d.trial.rt.gc[<span class="kw">names</span>(d.trial.rt.gc)<span class="op">==</span><span class="st">&#39;spatial&#39;</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb29-12"><a href="#cb29-12"></a></span>
+<span id="cb29-13"><a href="#cb29-13"></a><span class="co"># define factors</span></span>
+<span id="cb29-14"><a href="#cb29-14"></a>d.trial.rt.gc<span class="op">$</span>id        &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>id)</span>
+<span id="cb29-15"><a href="#cb29-15"></a>d.trial.rt.gc<span class="op">$</span>stimulus  &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>stimulus)</span>
+<span id="cb29-16"><a href="#cb29-16"></a>d.trial.rt.gc<span class="op">$</span>gaze      &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>gaze, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;direct&#39;</span>, <span class="st">&#39;averted&#39;</span>))</span>
+<span id="cb29-17"><a href="#cb29-17"></a>d.trial.rt.gc<span class="op">$</span>general_compt &lt;-<span class="st"> </span><span class="kw">factor</span>(d.trial.rt.gc<span class="op">$</span>general_compt, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;compt&#39;</span>, <span class="st">&#39;incompt&#39;</span>))</span>
+<span id="cb29-18"><a href="#cb29-18"></a></span>
+<span id="cb29-19"><a href="#cb29-19"></a><span class="co"># set effect coding contrasts</span></span>
+<span id="cb29-20"><a href="#cb29-20"></a><span class="kw">contrasts</span>(d.trial.rt.gc<span class="op">$</span>gaze) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="fl">0.5</span>) <span class="co"># [direct - averted]</span></span>
+<span id="cb29-21"><a href="#cb29-21"></a><span class="kw">contrasts</span>(d.trial.rt.gc<span class="op">$</span>general_compt) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>) <span class="co"># [incompt-compt]</span></span>
+<span id="cb29-22"><a href="#cb29-22"></a></span>
+<span id="cb29-23"><a href="#cb29-23"></a><span class="co"># center continuous predictors</span></span>
+<span id="cb29-24"><a href="#cb29-24"></a>d.trial.rt.gc<span class="op">$</span>aq_cen &lt;-<span class="st"> </span><span class="kw">scale</span>(d.trial.rt.gc<span class="op">$</span>aq, <span class="dt">center=</span>T, <span class="dt">scale=</span>F)</span></code></pre></div>
 <div id="descriptive-statistics-2" class="section level2">
 <h2>Descriptive statistics</h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Violin plot RT: Gaze*General compt.</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">ggplot</span>(d.trial.rt.gc, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>general_compt)) <span class="op">+</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a></span>
-<span id="cb31-5"><a href="#cb31-5"></a><span class="st">  </span><span class="co"># violin and boxplot</span></span>
-<span id="cb31-6"><a href="#cb31-6"></a><span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">trim=</span><span class="ot">TRUE</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></span>
-<span id="cb31-7"><a href="#cb31-7"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">group=</span><span class="kw">paste</span>(general_compt, gaze)), <span class="dt">width=</span><span class="fl">0.15</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">outlier.size=</span><span class="fl">0.5</span>, <span class="dt">outlier.stroke=</span><span class="dv">0</span>, <span class="dt">fill=</span><span class="st">&#39;white&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.6</span>) <span class="op">+</span></span>
-<span id="cb31-8"><a href="#cb31-8"></a></span>
-<span id="cb31-9"><a href="#cb31-9"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb31-10"><a href="#cb31-10"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">1000</span>)) <span class="op">+</span></span>
-<span id="cb31-11"><a href="#cb31-11"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name=</span><span class="st">&#39;Gaze&#39;</span>, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></span>
-<span id="cb31-12"><a href="#cb31-12"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name=</span><span class="st">&#39;General</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">values=</span>color_general, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb31-13"><a href="#cb31-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;General compatibility&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb31-14"><a href="#cb31-14"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb31-15"><a href="#cb31-15"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb31-16"><a href="#cb31-16"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb31-17"><a href="#cb31-17"></a>    <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</span>
-<span id="cb31-18"><a href="#cb31-18"></a>    <span class="dt">legend.title=</span><span class="kw">element_blank</span>(), </span>
-<span id="cb31-19"><a href="#cb31-19"></a>    <span class="dt">legend.margin=</span><span class="kw">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
-<span id="cb31-20"><a href="#cb31-20"></a>    <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="st">&#39;center&#39;</span>, <span class="st">&#39;top&#39;</span>),</span>
-<span id="cb31-21"><a href="#cb31-21"></a>    <span class="dt">legend.key.size=</span><span class="kw">unit</span>(<span class="dv">1</span>,<span class="st">&#39;line&#39;</span>),            </span>
-<span id="cb31-22"><a href="#cb31-22"></a>    <span class="dt">legend.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span>font_size<span class="dv">-2</span>),</span>
-<span id="cb31-23"><a href="#cb31-23"></a>    )   </span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Violin plot RT: Gaze*General compt.</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="kw">ggplot</span>(d.trial.rt.gc, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">fill=</span>general_compt)) <span class="op">+</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="st">  </span><span class="co"># violin and boxplot</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">trim=</span><span class="ot">TRUE</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">color=</span><span class="st">&#39;transparent&#39;</span>) <span class="op">+</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">group=</span><span class="kw">paste</span>(general_compt, gaze)), <span class="dt">width=</span><span class="fl">0.15</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">outlier.size=</span><span class="fl">0.5</span>, <span class="dt">outlier.stroke=</span><span class="dv">0</span>, <span class="dt">fill=</span><span class="st">&#39;white&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.6</span>) <span class="op">+</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a></span>
+<span id="cb30-9"><a href="#cb30-9"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">1000</span>)) <span class="op">+</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name=</span><span class="st">&#39;Gaze&#39;</span>, <span class="dt">labels=</span>gaze_labels) <span class="op">+</span></span>
+<span id="cb30-12"><a href="#cb30-12"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name=</span><span class="st">&#39;General</span><span class="ch">\n</span><span class="st">compatibility&#39;</span>, <span class="dt">values=</span>color_general, <span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb30-13"><a href="#cb30-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;General compatibility&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb30-14"><a href="#cb30-14"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb30-15"><a href="#cb30-15"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb30-16"><a href="#cb30-16"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb30-17"><a href="#cb30-17"></a>    <span class="dt">legend.position=</span><span class="st">&#39;top&#39;</span>,</span>
+<span id="cb30-18"><a href="#cb30-18"></a>    <span class="dt">legend.title=</span><span class="kw">element_blank</span>(), </span>
+<span id="cb30-19"><a href="#cb30-19"></a>    <span class="dt">legend.margin=</span><span class="kw">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb30-20"><a href="#cb30-20"></a>    <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="st">&#39;center&#39;</span>, <span class="st">&#39;top&#39;</span>),</span>
+<span id="cb30-21"><a href="#cb30-21"></a>    <span class="dt">legend.key.size=</span><span class="kw">unit</span>(<span class="dv">1</span>,<span class="st">&#39;line&#39;</span>),            </span>
+<span id="cb30-22"><a href="#cb30-22"></a>    <span class="dt">legend.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span>font_size<span class="dv">-2</span>),</span>
+<span id="cb30-23"><a href="#cb30-23"></a>    )   </span></code></pre></div>
 <p><img src="web_03_confirmatory_glmm_files/figure-html/GC_RT_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># compute descriptive stats (RT)</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>descr.rt.gc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt.gc, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;general_compt&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="kw">colnames</span>(descr.rt.gc) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;General Compt.&#39;</span>, <span class="st">&#39;N&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
-<span id="cb32-4"><a href="#cb32-4"></a></span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="co"># display table</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.rt.gc[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)], <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Reaction times&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># compute descriptive stats (RT)</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>descr.rt.gc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt.gc, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>, <span class="st">&#39;general_compt&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">colnames</span>(descr.rt.gc) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;General Compt.&#39;</span>, <span class="st">&#39;N&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="co"># display table</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.rt.gc[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)], <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Reaction times&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
 <table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Reaction times
@@ -1648,11 +1608,11 @@ incompt
 </div>
 <div id="glmm-2" class="section level2">
 <h2>GLMM</h2>
-<p>The GLMM yielded a main effect of general compatibility, showing that correct responses were faster for (imitatively + spatially) compatible vs. (imitatively + spatially) incompatible trials. There was also a significant main effect of gaze, such that responses following direct gaze were faster than following averted gaze. None of the remaining main effects or interactions were statistically significant.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>m.rt.gc &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>general_compt<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
-<span id="cb33-2"><a href="#cb33-2"></a>            <span class="dt">data=</span>d.trial.rt.gc, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</span>
-<span id="cb33-3"><a href="#cb33-3"></a>            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;bobyqa&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="kw">summary</span>(m.rt.gc, <span class="dt">corr=</span>F)</span></code></pre></div>
+<p>The GLMM yielded a main effect of <code>General compt.</code>, showing that correct responses were faster for (imitatively + spatially) compatible vs. (imitatively + spatially) incompatible trials. There was also a significant main effect of <code>Gaze</code>, such that responses following direct gaze were faster than following averted gaze. None of the remaining main effects or interactions were statistically significant.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>m.rt.gc &lt;-<span class="st"> </span><span class="kw">glmer</span>(rt <span class="op">~</span><span class="st"> </span>general_compt<span class="op">*</span>gaze<span class="op">*</span>aq_cen <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>stimulus),</span>
+<span id="cb32-2"><a href="#cb32-2"></a>            <span class="dt">data=</span>d.trial.rt.gc, <span class="dt">family=</span><span class="kw">inverse.gaussian</span>(<span class="dt">link=</span><span class="st">&#39;identity&#39;</span>),</span>
+<span id="cb32-3"><a href="#cb32-3"></a>            <span class="dt">control=</span><span class="kw">glmerControl</span>(<span class="dt">optimizer=</span><span class="st">&#39;bobyqa&#39;</span>, <span class="dt">optCtrl=</span><span class="kw">list</span>(<span class="dt">maxfun=</span><span class="fl">2e5</span>)))</span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="kw">summary</span>(m.rt.gc, <span class="dt">corr=</span>F)</span></code></pre></div>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: inverse.gaussian  ( identity )
@@ -1661,103 +1621,100 @@ incompt
 ## Control: glmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##  81338.2  81413.6 -40658.1  81316.2     6999 
+##  81335.1  81410.5 -40656.5  81313.1     6999 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -3.2380 -0.6696 -0.0816  0.6008  4.1536 
+## -3.2413 -0.6866 -0.1014  0.5792  4.1068 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance  Std.Dev. 
-##  stimulus (Intercept) 4.992e+01  7.065674
-##  id       (Intercept) 9.016e+02 30.026217
-##  Residual             5.725e-05  0.007566
+##  stimulus (Intercept) 5.081e+01  7.127843
+##  id       (Intercept) 8.576e+02 29.285301
+##  Residual             5.738e-05  0.007575
 ## Number of obs: 7010, groups:  stimulus, 64; id, 60
 ## 
 ## Fixed effects:
 ##                             Estimate Std. Error t value Pr(&gt;|z|)    
-## (Intercept)                 502.4126     4.1073 122.322  &lt; 2e-16 ***
-## general_compt1              -33.0508     1.9150 -17.259  &lt; 2e-16 ***
-## gaze1                        -5.2640     1.9074  -2.760  0.00578 ** 
-## aq_cen                       -0.2700     0.7476  -0.361  0.71796    
-## general_compt1:gaze1          2.7353     3.8144   0.717  0.47331    
-## general_compt1:aq_cen        -0.2084     0.3515  -0.593  0.55330    
-## gaze1:aq_cen                 -0.5533     0.3511  -1.576  0.11505    
-## general_compt1:gaze1:aq_cen   1.3222     0.7022   1.883  0.05972 .  
+## (Intercept)                 529.7019    11.4395  46.305  &lt; 2e-16 ***
+## general_compt1               33.1110     1.8680  17.726  &lt; 2e-16 ***
+## gaze1                        -4.9534     1.8481  -2.680  0.00736 ** 
+## aq_cen                        0.1129     2.7458   0.041  0.96719    
+## general_compt1:gaze1         -2.6464     3.6851  -0.718  0.47267    
+## general_compt1:aq_cen         0.2188     0.3435   0.637  0.52413    
+## gaze1:aq_cen                 -0.5647     0.3428  -1.647  0.09951 .  
+## general_compt1:gaze1:aq_cen  -1.3354     0.6853  -1.949  0.05135 .  
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## convergence code: 0
-## unable to evaluate scaled gradient
-## Model failed to converge: degenerate  Hessian with 1 negative eigenvalues</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># MODEL DIAGNOSTICS</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a></span>
-<span id="cb35-3"><a href="#cb35-3"></a><span class="co"># residuals</span></span>
-<span id="cb35-4"><a href="#cb35-4"></a><span class="kw">par</span>(<span class="st">&#39;mfcol&#39;</span>=<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb35-5"><a href="#cb35-5"></a><span class="kw">plot</span>(<span class="kw">fitted</span>(m.rt.gc), <span class="kw">residuals</span>(m.rt.gc),<span class="dt">xlab=</span><span class="st">&#39;Fitted Values&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Residuals&#39;</span>, <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>))</span>
-<span id="cb35-6"><a href="#cb35-6"></a><span class="kw">hist</span>(<span class="kw">residuals</span>(m.rt.gc))</span>
-<span id="cb35-7"><a href="#cb35-7"></a><span class="kw">qqnorm</span>(<span class="kw">residuals</span>(m.rt.gc))</span>
-<span id="cb35-8"><a href="#cb35-8"></a><span class="kw">par</span>(<span class="st">&#39;mfcol&#39;</span>=<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb35-9"><a href="#cb35-9"></a></span>
-<span id="cb35-10"><a href="#cb35-10"></a><span class="co"># multicolinearity</span></span>
-<span id="cb35-11"><a href="#cb35-11"></a>car<span class="op">::</span><span class="kw">vif</span>(m.rt.gc)</span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># GENERAL COMPATIBILITY</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb36-4"><a href="#cb36-4"></a>desc.gc.rt.gc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt.gc, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;general_compt&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb36-5"><a href="#cb36-5"></a></span>
-<span id="cb36-6"><a href="#cb36-6"></a><span class="co"># figure</span></span>
-<span id="cb36-7"><a href="#cb36-7"></a>fig.gc.rt.compt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.gc.rt.gc, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>general_compt, <span class="dt">color=</span>general_compt)) <span class="op">+</span></span>
-<span id="cb36-8"><a href="#cb36-8"></a></span>
-<span id="cb36-9"><a href="#cb36-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb36-10"><a href="#cb36-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb36-11"><a href="#cb36-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb36-12"><a href="#cb36-12"></a></span>
-<span id="cb36-13"><a href="#cb36-13"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb36-14"><a href="#cb36-14"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_general) <span class="op">+</span></span>
-<span id="cb36-15"><a href="#cb36-15"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
-<span id="cb36-16"><a href="#cb36-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;General compatibility&#39;</span>) <span class="op">+</span></span>
-<span id="cb36-17"><a href="#cb36-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb36-18"><a href="#cb36-18"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">470</span>, <span class="dv">520</span>) <span class="op">+</span></span>
-<span id="cb36-19"><a href="#cb36-19"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb36-20"><a href="#cb36-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb36-21"><a href="#cb36-21"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb36-22"><a href="#cb36-22"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb36-23"><a href="#cb36-23"></a>    )</span>
-<span id="cb36-24"><a href="#cb36-24"></a></span>
-<span id="cb36-25"><a href="#cb36-25"></a><span class="co"># GAZE</span></span>
-<span id="cb36-26"><a href="#cb36-26"></a><span class="co"># ~~~~~</span></span>
-<span id="cb36-27"><a href="#cb36-27"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
-<span id="cb36-28"><a href="#cb36-28"></a>desc.gc.rt.gaze &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt.gc, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
-<span id="cb36-29"><a href="#cb36-29"></a></span>
-<span id="cb36-30"><a href="#cb36-30"></a><span class="co"># figure</span></span>
-<span id="cb36-31"><a href="#cb36-31"></a>fig.gc.rt.gaze &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.gc.rt.gaze, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">color=</span>gaze)) <span class="op">+</span></span>
-<span id="cb36-32"><a href="#cb36-32"></a></span>
-<span id="cb36-33"><a href="#cb36-33"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
-<span id="cb36-34"><a href="#cb36-34"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb36-35"><a href="#cb36-35"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
-<span id="cb36-36"><a href="#cb36-36"></a></span>
-<span id="cb36-37"><a href="#cb36-37"></a><span class="st">  </span><span class="co"># format</span></span>
-<span id="cb36-38"><a href="#cb36-38"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_gaze) <span class="op">+</span></span>
-<span id="cb36-39"><a href="#cb36-39"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Direct&#39;</span>, <span class="st">&#39;Averted&#39;</span>)) <span class="op">+</span></span>
-<span id="cb36-40"><a href="#cb36-40"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Gaze&#39;</span>) <span class="op">+</span></span>
-<span id="cb36-41"><a href="#cb36-41"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
-<span id="cb36-42"><a href="#cb36-42"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">470</span>, <span class="dv">520</span>) <span class="op">+</span></span>
-<span id="cb36-43"><a href="#cb36-43"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
-<span id="cb36-44"><a href="#cb36-44"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb36-45"><a href="#cb36-45"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb36-46"><a href="#cb36-46"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb36-47"><a href="#cb36-47"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
-<span id="cb36-48"><a href="#cb36-48"></a>    )</span>
-<span id="cb36-49"><a href="#cb36-49"></a></span>
-<span id="cb36-50"><a href="#cb36-50"></a><span class="co"># combine figures</span></span>
-<span id="cb36-51"><a href="#cb36-51"></a><span class="co"># ~~~~~~~~~~~~~~~~</span></span>
-<span id="cb36-52"><a href="#cb36-52"></a>fig.gc.rt.compt <span class="op">+</span><span class="st"> </span>fig.gc.rt.gaze</span></code></pre></div>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># MODEL DIAGNOSTICS</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="co"># residuals</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="kw">par</span>(<span class="st">&#39;mfcol&#39;</span>=<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb34-5"><a href="#cb34-5"></a><span class="kw">plot</span>(<span class="kw">fitted</span>(m.rt.gc), <span class="kw">residuals</span>(m.rt.gc),<span class="dt">xlab=</span><span class="st">&#39;Fitted Values&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Residuals&#39;</span>, <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>))</span>
+<span id="cb34-6"><a href="#cb34-6"></a><span class="kw">hist</span>(<span class="kw">residuals</span>(m.rt.gc))</span>
+<span id="cb34-7"><a href="#cb34-7"></a><span class="kw">qqnorm</span>(<span class="kw">residuals</span>(m.rt.gc))</span>
+<span id="cb34-8"><a href="#cb34-8"></a><span class="kw">par</span>(<span class="st">&#39;mfcol&#39;</span>=<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb34-9"><a href="#cb34-9"></a></span>
+<span id="cb34-10"><a href="#cb34-10"></a><span class="co"># multicolinearity</span></span>
+<span id="cb34-11"><a href="#cb34-11"></a>car<span class="op">::</span><span class="kw">vif</span>(m.rt.gc)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># GENERAL COMPATIBILITY</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="co"># ~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>desc.gc.rt.gc &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt.gc, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;general_compt&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb35-5"><a href="#cb35-5"></a></span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="co"># figure</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>fig.gc.rt.compt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.gc.rt.gc, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>general_compt, <span class="dt">color=</span>general_compt)) <span class="op">+</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb35-10"><a href="#cb35-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb35-12"><a href="#cb35-12"></a></span>
+<span id="cb35-13"><a href="#cb35-13"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_general) <span class="op">+</span></span>
+<span id="cb35-15"><a href="#cb35-15"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span>compt_labels) <span class="op">+</span></span>
+<span id="cb35-16"><a href="#cb35-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;General compatibility&#39;</span>) <span class="op">+</span></span>
+<span id="cb35-17"><a href="#cb35-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb35-18"><a href="#cb35-18"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">470</span>, <span class="dv">520</span>) <span class="op">+</span></span>
+<span id="cb35-19"><a href="#cb35-19"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb35-20"><a href="#cb35-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb35-21"><a href="#cb35-21"></a>    <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb35-22"><a href="#cb35-22"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb35-23"><a href="#cb35-23"></a>    )</span>
+<span id="cb35-24"><a href="#cb35-24"></a></span>
+<span id="cb35-25"><a href="#cb35-25"></a><span class="co"># GAZE</span></span>
+<span id="cb35-26"><a href="#cb35-26"></a><span class="co"># ~~~~~</span></span>
+<span id="cb35-27"><a href="#cb35-27"></a><span class="co"># means &amp; confidence intervals (within-subject, method from Morey 2008)</span></span>
+<span id="cb35-28"><a href="#cb35-28"></a>desc.gc.rt.gaze &lt;-<span class="st"> </span><span class="kw">summarySEwithin</span>(d.trial.rt.gc, <span class="dt">measurevar=</span><span class="st">&#39;rt&#39;</span>, <span class="dt">betweenvars=</span><span class="ot">NULL</span>, <span class="dt">withinvars=</span><span class="kw">c</span>(<span class="st">&#39;gaze&#39;</span>), <span class="dt">idvar=</span><span class="kw">c</span>(<span class="st">&#39;id&#39;</span>), <span class="dt">na.rm=</span><span class="ot">FALSE</span>, <span class="dt">conf.interval=</span><span class="fl">0.95</span>)</span>
+<span id="cb35-29"><a href="#cb35-29"></a></span>
+<span id="cb35-30"><a href="#cb35-30"></a><span class="co"># figure</span></span>
+<span id="cb35-31"><a href="#cb35-31"></a>fig.gc.rt.gaze &lt;-<span class="st"> </span><span class="kw">ggplot</span>(desc.gc.rt.gaze, <span class="kw">aes</span>(<span class="dt">y=</span>rt, <span class="dt">x=</span>gaze, <span class="dt">color=</span>gaze)) <span class="op">+</span></span>
+<span id="cb35-32"><a href="#cb35-32"></a></span>
+<span id="cb35-33"><a href="#cb35-33"></a><span class="st">  </span><span class="co"># bar graphs with means and CI</span></span>
+<span id="cb35-34"><a href="#cb35-34"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb35-35"><a href="#cb35-35"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>rt<span class="op">-</span>ci, <span class="dt">ymax=</span>rt<span class="op">+</span>ci), <span class="dt">width=</span><span class="fl">0.05</span>, <span class="dt">size=</span>line_width<span class="fl">-0.5</span>) <span class="op">+</span></span>
+<span id="cb35-36"><a href="#cb35-36"></a></span>
+<span id="cb35-37"><a href="#cb35-37"></a><span class="st">  </span><span class="co"># format</span></span>
+<span id="cb35-38"><a href="#cb35-38"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>color_gaze) <span class="op">+</span></span>
+<span id="cb35-39"><a href="#cb35-39"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Direct&#39;</span>, <span class="st">&#39;Averted&#39;</span>)) <span class="op">+</span></span>
+<span id="cb35-40"><a href="#cb35-40"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&#39;Gaze&#39;</span>) <span class="op">+</span></span>
+<span id="cb35-41"><a href="#cb35-41"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Reaction times (ms)&#39;</span>) <span class="op">+</span></span>
+<span id="cb35-42"><a href="#cb35-42"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">470</span>, <span class="dv">520</span>) <span class="op">+</span></span>
+<span id="cb35-43"><a href="#cb35-43"></a><span class="st">  </span>my_theme <span class="op">+</span></span>
+<span id="cb35-44"><a href="#cb35-44"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb35-45"><a href="#cb35-45"></a>    <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb35-46"><a href="#cb35-46"></a>    <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb35-47"><a href="#cb35-47"></a>    <span class="dt">legend.position=</span><span class="st">&#39;none&#39;</span></span>
+<span id="cb35-48"><a href="#cb35-48"></a>    )</span>
+<span id="cb35-49"><a href="#cb35-49"></a></span>
+<span id="cb35-50"><a href="#cb35-50"></a><span class="co"># combine figures</span></span>
+<span id="cb35-51"><a href="#cb35-51"></a><span class="co"># ~~~~~~~~~~~~~~~~</span></span>
+<span id="cb35-52"><a href="#cb35-52"></a>fig.gc.rt.compt <span class="op">+</span><span class="st"> </span>fig.gc.rt.gaze</span></code></pre></div>
 <p><img src="web_03_confirmatory_glmm_files/figure-html/GC_RT_MainEffects_Fig-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>descr.gc.rt.maineffects &lt;-<span class="st"> </span><span class="kw">cbind</span>(desc.gc.rt.gc[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.gc.rt.gaze[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)])</span>
-<span id="cb37-2"><a href="#cb37-2"></a><span class="kw">colnames</span>(descr.gc.rt.maineffects) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;General compt.&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
-<span id="cb37-3"><a href="#cb37-3"></a></span>
-<span id="cb37-4"><a href="#cb37-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.gc.rt.maineffects, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics for main effects&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb37-5"><a href="#cb37-5"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>descr.gc.rt.maineffects &lt;-<span class="st"> </span><span class="kw">cbind</span>(desc.gc.rt.gc[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)], <span class="kw">data.frame</span>(<span class="st">&#39; &#39;</span>=<span class="kw">c</span>(<span class="st">&#39;      &#39;</span>, <span class="st">&#39;      &#39;</span>)), desc.gc.rt.gaze[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>)])</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="kw">colnames</span>(descr.gc.rt.maineffects) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;General compt.&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>, <span class="st">&#39;   &#39;</span>,<span class="st">&#39;Gaze&#39;</span>, <span class="st">&#39;M&#39;</span>, <span class="st">&#39;SD&#39;</span>, <span class="st">&#39;SE&#39;</span>, <span class="st">&#39;CI&#39;</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(descr.gc.rt.maineffects, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption=</span><span class="st">&#39;Summary statistics for main effects&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width=</span>F, <span class="dt">position=</span><span class="st">&#39;center&#39;</span>, <span class="kw">c</span>(<span class="st">&#39;hover&#39;</span>, <span class="st">&#39;condensed&#39;</span>, <span class="st">&#39;responsive&#39;</span>))</span></code></pre></div>
 <table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for main effects
@@ -1869,14 +1826,11 @@ averted
 </tr>
 </tbody>
 </table>
-<!-- #################################################### -->
-<!-- # GLMMs SUMMARY TABLES                               -->
-<!-- #################################################### -->
 </div>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session info</h1>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.0.0 (2020-04-24)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.5
