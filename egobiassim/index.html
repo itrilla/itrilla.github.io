@@ -2370,7 +2370,7 @@ ph.similarity.bytime &lt;-d.ratings %&gt;%
   group_by(time) %&gt;%
   cohens_d(rating_similarity~similarity, paired=TRUE) %&gt;%
   inner_join(ph.similarity.bytime) %&gt;%
-  select(&#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
+  select(&#39;Level&#39;=time, &#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
          &#39;Estimate&#39;=estimate, &#39;t&#39;=statistic, &#39;DF&#39;=df, &#39;p&#39;=p, 
          &#39;CI Low&#39;=conf.low, &#39;CI High&#39;=conf.high, &quot;Cohen&#39;s d&quot;=effsize)
 
@@ -2386,7 +2386,7 @@ ph.similarity.bytarget &lt;-d.ratings %&gt;%
   dplyr::group_by(similarity) %&gt;%
   cohens_d(rating_similarity~time, paired=TRUE) %&gt;%
   inner_join(ph.similarity.bytarget) %&gt;%
-  select(&#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
+  select(&#39;Level&#39;=similarity, &#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
          &#39;Estimate&#39;=estimate, &#39;t&#39;=statistic, &#39;DF&#39;=df, &#39;p&#39;=p, 
          &#39;CI Low&#39;=conf.low, &#39;CI High&#39;=conf.high, &quot;Cohen&#39;s d&quot;=effsize)
 
@@ -2401,6 +2401,9 @@ Pairwise comparisons (Similarity ratings)
 </caption>
 <thead>
 <tr>
+<th style="text-align:left;">
+Level
+</th>
 <th style="text-align:left;">
 Condition 1
 </th>
@@ -2436,6 +2439,9 @@ Cohen’s d
 <tbody>
 <tr>
 <td style="text-align:left;">
+pre
+</td>
+<td style="text-align:left;">
 similar
 </td>
 <td style="text-align:left;">
@@ -2467,6 +2473,9 @@ dissimilar
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+post
+</td>
 <td style="text-align:left;">
 similar
 </td>
@@ -2500,6 +2509,9 @@ dissimilar
 </tr>
 <tr>
 <td style="text-align:left;">
+similar
+</td>
+<td style="text-align:left;">
 pre
 </td>
 <td style="text-align:left;">
@@ -2531,6 +2543,9 @@ post
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+dissimilar
+</td>
 <td style="text-align:left;">
 pre
 </td>
@@ -2699,7 +2714,7 @@ ph.likeability.bytime &lt;-d.ratings %&gt;%
   group_by(time) %&gt;%
   cohens_d(rating_likeability~similarity, paired=TRUE) %&gt;%
   inner_join(ph.likeability.bytime) %&gt;%
-  select(&#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
+  select(&#39;Level&#39;=time, &#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
          &#39;Estimate&#39;=estimate, &#39;t&#39;=statistic, &#39;DF&#39;=df, &#39;p&#39;=p, 
          &#39;CI Low&#39;=conf.low, &#39;CI High&#39;=conf.high, &quot;Cohen&#39;s d&quot;=effsize)
 
@@ -2715,7 +2730,7 @@ ph.likeability.bytarget &lt;-d.ratings %&gt;%
   dplyr::group_by(similarity) %&gt;%
   cohens_d(rating_likeability~time, paired=TRUE) %&gt;%
   inner_join(ph.likeability.bytarget) %&gt;%
-  select(&#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
+  select(&#39;Level&#39;=similarity, &#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
          &#39;Estimate&#39;=estimate, &#39;t&#39;=statistic, &#39;DF&#39;=df, &#39;p&#39;=p, 
          &#39;CI Low&#39;=conf.low, &#39;CI High&#39;=conf.high, &quot;Cohen&#39;s d&quot;=effsize)
 
@@ -2730,6 +2745,9 @@ Pairwise comparisons (Likeability ratings)
 </caption>
 <thead>
 <tr>
+<th style="text-align:left;">
+Level
+</th>
 <th style="text-align:left;">
 Condition 1
 </th>
@@ -2765,6 +2783,9 @@ Cohen’s d
 <tbody>
 <tr>
 <td style="text-align:left;">
+pre
+</td>
+<td style="text-align:left;">
 similar
 </td>
 <td style="text-align:left;">
@@ -2796,6 +2817,9 @@ dissimilar
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+post
+</td>
 <td style="text-align:left;">
 similar
 </td>
@@ -2829,6 +2853,9 @@ dissimilar
 </tr>
 <tr>
 <td style="text-align:left;">
+similar
+</td>
+<td style="text-align:left;">
 pre
 </td>
 <td style="text-align:left;">
@@ -2860,6 +2887,9 @@ post
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+dissimilar
+</td>
 <td style="text-align:left;">
 pre
 </td>
@@ -3028,7 +3058,7 @@ ph.sympathy.bytime &lt;-d.ratings %&gt;%
   group_by(time) %&gt;%
   cohens_d(rating_sympathy~similarity, paired=TRUE) %&gt;%
   inner_join(ph.sympathy.bytime) %&gt;%
-  select(&#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
+  select(&#39;Level&#39;=time, &#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
          &#39;Estimate&#39;=estimate, &#39;t&#39;=statistic, &#39;DF&#39;=df, &#39;p&#39;=p, 
          &#39;CI Low&#39;=conf.low, &#39;CI High&#39;=conf.high, &quot;Cohen&#39;s d&quot;=effsize)
 
@@ -3044,7 +3074,7 @@ ph.sympathy.bytarget &lt;-d.ratings %&gt;%
   dplyr::group_by(similarity) %&gt;%
   cohens_d(rating_sympathy~time, paired=TRUE) %&gt;%
   inner_join(ph.sympathy.bytarget) %&gt;%
-  select(&#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
+  select(&#39;Level&#39;=similarity, &#39;Condition 1&#39;=group1, &#39;Condition 2&#39;=group2, &#39;N&#39;=n1, 
          &#39;Estimate&#39;=estimate, &#39;t&#39;=statistic, &#39;DF&#39;=df, &#39;p&#39;=p, 
          &#39;CI Low&#39;=conf.low, &#39;CI High&#39;=conf.high, &quot;Cohen&#39;s d&quot;=effsize)
 
@@ -3059,6 +3089,9 @@ Pairwise comparisons (Sympathy ratings)
 </caption>
 <thead>
 <tr>
+<th style="text-align:left;">
+Level
+</th>
 <th style="text-align:left;">
 Condition 1
 </th>
@@ -3094,6 +3127,9 @@ Cohen’s d
 <tbody>
 <tr>
 <td style="text-align:left;">
+pre
+</td>
+<td style="text-align:left;">
 similar
 </td>
 <td style="text-align:left;">
@@ -3125,6 +3161,9 @@ dissimilar
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+post
+</td>
 <td style="text-align:left;">
 similar
 </td>
@@ -3158,6 +3197,9 @@ dissimilar
 </tr>
 <tr>
 <td style="text-align:left;">
+similar
+</td>
+<td style="text-align:left;">
 pre
 </td>
 <td style="text-align:left;">
@@ -3189,6 +3231,9 @@ post
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+dissimilar
+</td>
 <td style="text-align:left;">
 pre
 </td>
